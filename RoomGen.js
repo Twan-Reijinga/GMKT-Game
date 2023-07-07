@@ -85,7 +85,7 @@ function getWeightedRandomTile(str = ""){ //usage str = "WG" or "GW" for only wa
 
     if (str =! ""){
         for (let i = 0; i < tilemap.length; i++){
-            if (!str.includes(tilemap[i].type)){
+            if (str.includes(tilemap[i].type) != true){
                 tilemap.splice(i, 1);
                 i -= 1
             }
