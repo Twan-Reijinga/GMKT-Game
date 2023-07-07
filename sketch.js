@@ -1,6 +1,9 @@
 function preload() {
     playerSprite = loadImage("textures/tmpPlayerSprite.png");
     tileMap = loadImage("textures/tiles.png");
+}
+
+function setup() {
     tiles = {
         0: tileMap.get(0, 0, 8, 8),
         1: tileMap.get(0, 8, 8, 8),
@@ -11,17 +14,14 @@ function preload() {
         6: tileMap.get(0 + 24, 8, 8, 8),
         7: tileMap.get(8 + 24, 0, 8, 8),
         8: tileMap.get(16 + 24, 0, 8, 8),
-        9: tileMap.get(8 + 24, 8, 8, 8)
+        9: tileMap.get(8 + 24, 8, 8, 8),
     };
-}
-
-function setup() {
-    createCanvas(1000, 1000);
+    createCanvas(950, 950);
     background(51);
     room = new Room(roomTemplates.level1, 50, tiles);
 }
 
 function draw() {
     room.draw();
-    player.draw();
+    // player.draw();
 }
