@@ -25,3 +25,16 @@ function draw() {
     room.draw();
     // player.draw();
 }
+
+function arrayFromMap(img, size) {
+    arr = [];
+    for (let y = 0; y < size; y++) {
+        v = [];
+        for (let x = 0; x < size; y++) {
+            v.push(+(red(img.get(x, y)) != 0));
+        }
+        str = "[" + v.join(",") + "],\n";
+        arr.push(str);
+    }
+    console.log("[" + arr.join("") + "]");
+}

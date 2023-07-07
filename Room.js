@@ -8,7 +8,7 @@ class Room {
     getTileFloor(x, y) {
         tileX = Math.floor(x / this.tileSize);
         tileY = Math.floor(y / this.tileSize);
-        return map[tileY][tileX];
+        return this.map[tileY][tileX];
     }
 
     getRequiredTile(x, y, map) {
@@ -30,7 +30,7 @@ class Room {
         } else {
             val = 4;
         }
-        val = val + 5 * map[y][x];
+        val = val + 5 * (map[y][x] == 1);
         return val;
     }
 
