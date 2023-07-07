@@ -13,7 +13,7 @@ function setup() {
 
     createCanvas(300, 300);
     background(51);
-    room = new Room(["WWW", "GGG", "WWW"], 100, tiles);
+    room = new Room(["RRR", "WWW", "GGG"], 100, tiles);
 }
 
 function draw() {
