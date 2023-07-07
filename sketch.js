@@ -16,21 +16,21 @@ function setup() {
         8: tileMap.get(16 + 24, 0, 8, 8),
         9: tileMap.get(8 + 24, 8, 8, 8),
     };
-    createCanvas(950, 950);
+    createCanvas(1000, 1000);
     background(51);
-    room = new Room(roomTemplates.level1, 50, tiles);
+    room = new Room(roomTemplates.level2, 50, tiles);
 }
 
 function draw() {
     room.draw();
-    // player.draw();
+    player.draw();
 }
 
 function arrayFromMap(img, size) {
     arr = [];
     for (let y = 0; y < size; y++) {
         v = [];
-        for (let x = 0; x < size; y++) {
+        for (let x = 0; x < size; x++) {
             v.push(+(red(img.get(x, y)) != 0));
         }
         str = "[" + v.join(",") + "],\n";
