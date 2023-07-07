@@ -6,16 +6,19 @@ class Room {
     }
 
     getTileFloor(x, y) {
+        if (
+            x < 0 ||
+            y < 0 ||
+            x > this.map.length * this.tileSize ||
+            y > this.map.length * this.tileSize //checkt of x of y buiten de map komt (al die andere onhandigheid is nu onnodig)
+        ) {
+            return false;
+        }
+
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
         console.log(tileX, tileY, this.map[tileY], this.map[tileY][tileX]);
-        if (
-            this.map[tileY] !== undefined &&
-            this.map[tileY][tileX] !== undefined
-        ) {
-            return this.map[tileY][tileX];
-        }
-        return -1;
+        return this.map[tileY][tileX];
     }
 
     getRequiredTile(x, y, map) {

@@ -1,15 +1,18 @@
 class Player {
-    constructor(playerSprite, x, y, playerWidth, playerHeight) {
+    constructor(playerSprite, x, y, playerWidth, playerHeight, isHunter) {
         this.sprite = playerSprite;
         this.pos = createVector(x, y);
         this.width = playerWidth;
         this.height = playerHeight;
-        this.velocity = 5;
+        this.velocity = 2.5;
         this.health = 100;
         this.maxHealth = 100;
+
+        this.isHunter = isHunter;
     }
 
     draw() {
+        noSmooth(); //behoudt pixel-style
         image(this.sprite, this.pos.x, this.pos.y, this.width, this.height);
     }
 
@@ -18,8 +21,9 @@ class Player {
             case "up":
                 this.pos.y -= this.velocity;
                 if (
-                    room.getTileFloor(this.pos.x, this.pos.y) ||
-                    room.getTileFloor(this.pos.x + this.width, this.pos.y)
+                    this.isHunter ^ room.getTileFloor(this.pos.x, this.pos.y) || //isHunter XOR die andere om te flippen als ishunter 1 is en niks te doen als 0(laat player op boven lopen).
+                    this.isHunter ^
+                        room.getTileFloor(this.pos.x + this.width, this.pos.y)
                 ) {
                     this.pos.y += this.velocity;
                 }
@@ -27,11 +31,16 @@ class Player {
             case "down":
                 this.pos.y += this.velocity;
                 if (
-                    room.getTileFloor(this.pos.x, this.pos.y + this.height) ||
-                    room.getTileFloor(
-                        this.pos.x + this.width,
-                        this.pos.y + this.height
-                    )
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x,
+                            this.pos.y + this.height
+                        ) ||
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x + this.width,
+                            this.pos.y + this.height
+                        )
                 ) {
                     this.pos.y -= this.velocity;
                 }
@@ -39,8 +48,9 @@ class Player {
             case "left":
                 this.pos.x -= this.velocity;
                 if (
-                    room.getTileFloor(this.pos.x, this.pos.y) ||
-                    room.getTileFloor(this.pos.x, this.pos.y + this.height)
+                    this.isHunter ^ room.getTileFloor(this.pos.x, this.pos.y) ||
+                    this.isHunter ^
+                        room.getTileFloor(this.pos.x, this.pos.y + this.height)
                 ) {
                     this.pos.x += this.velocity;
                 }
@@ -48,11 +58,16 @@ class Player {
             case "right":
                 this.pos.x += this.velocity;
                 if (
-                    room.getTileFloor(this.pos.x + this.width, this.pos.y) ||
-                    room.getTileFloor(
-                        this.pos.x + this.width,
-                        this.pos.y + this.height
-                    )
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x + this.width,
+                            this.pos.y
+                        ) ||
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x + this.width,
+                            this.pos.y + this.height
+                        )
                 ) {
                     this.pos.x -= this.velocity;
                     print("ping", room.getTileFloor(this.pos.x, this.pos.y));

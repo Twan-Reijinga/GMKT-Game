@@ -20,13 +20,18 @@ function setup() {
     createCanvas(950, 950);
     background(51);
     room = new Room(roomTemplates.level1, 50, tiles);
-    player = new Player(playerSprite, 50, 50, 20, 40);
+    player = new Player(playerSprite, 0, 0, 20, 40, true);
 }
 
 function draw() {
     room.draw();
     player.draw();
 
+    playerInput();
+}
+
+function playerInput() {
+    //playerInput geseparate, maakt later makkelijker om 2 players te hebben.
     if (keyIsDown(UP_ARROW)) {
         player.move("up");
     }
@@ -53,5 +58,3 @@ function arrayFromMap(img, size) {
     }
     console.log("[" + arr.join("") + "]");
 }
-
-function keyIsDown() {}
