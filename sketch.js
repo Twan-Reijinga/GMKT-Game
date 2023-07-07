@@ -11,9 +11,9 @@ function setup() {
         "R": roofTex
     };
 
-    createCanvas(300, 300);
+    createCanvas(200, 200);
     background(51);
-    room = new Room(["RRR", "WWW", "GGG"], 100, tiles);
+    room = new Room(MakeRoom(2, 2), 100, tiles);
 }
 
 function draw() {
