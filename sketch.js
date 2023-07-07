@@ -1,19 +1,27 @@
-function preload(){
-    groundTex = loadImage("textures/Ground.png");
-    wallTex = loadImage("textures/Brick.png");
-    roofTex = loadImage("textures/Roof.png");
+function preload() {
+    tiles = {
+        W: {
+            texture: loadImage("textures/Ground.png"),
+            walkable: false,
+            generationChange: 5,
+        },
+        G: {
+            texture: loadImage("textures/Brick.png"),
+            walkable: true,
+            generationChange: 5,
+        },
+        R: {
+            texture: loadImage("textures/Roof.png"),
+            walkable: false,
+            generationChange: 190,
+        },
+    };
 }
 
 function setup() {
-    tiles = {
-        "G": groundTex,
-        "W": wallTex,
-        "R": roofTex
-    };
-
-    createCanvas(200, 200);
+    createCanvas(300, 300);
     background(51);
-    room = new Room(MakeRoom(2, 2), 100, tiles);
+    room = new Room(roomTemplates.level1, 100, tiles);
 }
 
 function draw() {
