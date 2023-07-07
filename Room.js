@@ -9,8 +9,8 @@ class Room {
         if (
             x < 0 ||
             y < 0 ||
-            x > this.map.length * this.tileSize ||
-            y > this.map.length * this.tileSize //checkt of x of y buiten de map komt (al die andere onhandigheid is nu onnodig)
+            x >= this.map.length * this.tileSize ||
+            y >= this.map.length * this.tileSize //checkt of x of y buiten de map komt (al die andere onhandigheid is nu onnodig)
         ) {
             return false;
         }

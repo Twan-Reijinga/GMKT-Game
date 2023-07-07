@@ -4,7 +4,7 @@ class Player {
         this.pos = createVector(x, y);
         this.width = playerWidth;
         this.height = playerHeight;
-        this.velocity = 2.5;
+        this.velocity = 10;
         this.health = 100;
         this.maxHealth = 100;
 
@@ -26,6 +26,8 @@ class Player {
                         room.getTileFloor(this.pos.x + this.width, this.pos.y)
                 ) {
                     this.pos.y += this.velocity;
+                    let updist = this.pos.y % tileSize; //updist/rightdist ect zorgd ervoor dat de player wel tegen een muur aan kan drukken (ik wil het wel uitleggen in een call)
+                    this.pos.y -= updist - 1;
                 }
                 break;
             case "down":
@@ -43,6 +45,9 @@ class Player {
                         )
                 ) {
                     this.pos.y -= this.velocity;
+                    let downdist =
+                        tileSize - ((this.pos.y % tileSize) + this.height);
+                    this.pos.y += downdist - 1;
                 }
                 break;
             case "left":
@@ -53,6 +58,8 @@ class Player {
                         room.getTileFloor(this.pos.x, this.pos.y + this.height)
                 ) {
                     this.pos.x += this.velocity;
+                    let leftdist = this.pos.x % tileSize;
+                    this.pos.x -= leftdist - 1;
                 }
                 break;
             case "right":
@@ -70,7 +77,11 @@ class Player {
                         )
                 ) {
                     this.pos.x -= this.velocity;
-                    print("ping", room.getTileFloor(this.pos.x, this.pos.y));
+                    let rightdist =
+                        tileSize - ((this.pos.x % tileSize) + this.width);
+                    this.pos.x += rightdist - 1;
+
+                    print("ping", room.getTileFloor(this.pos.x, this.pos.y)); //vergeet niet dit weg te halen
                 }
                 break;
             default:

@@ -4,6 +4,7 @@ function preload() {
 }
 
 function setup() {
+    tileSize = 50;
     tiles = [
         tileMap.get(0, 0, 8, 8),
         tileMap.get(0, 8, 8, 8),
@@ -19,7 +20,7 @@ function setup() {
     ];
     createCanvas(950, 950);
     background(51);
-    room = new Room(roomTemplates.level1, 50, tiles);
+    room = new Room(roomTemplates.level1, tileSize, tiles);
     player = new Player(playerSprite, 0, 0, 20, 40, true);
 }
 
