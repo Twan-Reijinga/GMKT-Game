@@ -21,8 +21,7 @@ class Room {
         if (right || bottom || map[y][x] != map[y + 1][x + 1]) corner = true;
         if (corner && !right && !bottom) {
             val = 0;
-        }
-        if (right && bottom) {
+        } else if (right && bottom) {
             val = 1;
         } else if (!right && bottom) {
             val = 2;
