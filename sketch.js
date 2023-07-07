@@ -4,26 +4,41 @@ function preload() {
 }
 
 function setup() {
-    tiles = {
-        0: tileMap.get(0, 0, 8, 8),
-        1: tileMap.get(0, 8, 8, 8),
-        2: tileMap.get(8, 0, 8, 8),
-        3: tileMap.get(16, 0, 8, 8),
-        4: tileMap.get(8, 8, 8, 8),
-        5: tileMap.get(0 + 24, 0, 8, 8),
-        6: tileMap.get(0 + 24, 8, 8, 8),
-        7: tileMap.get(8 + 24, 0, 8, 8),
-        8: tileMap.get(16 + 24, 0, 8, 8),
-        9: tileMap.get(8 + 24, 8, 8, 8),
-    };
-    createCanvas(1000, 1000);
+    tiles = [
+        tileMap.get(0, 0, 8, 8),
+        tileMap.get(0, 8, 8, 8),
+        tileMap.get(8, 0, 8, 8),
+        tileMap.get(16, 0, 8, 8),
+        tileMap.get(8, 8, 8, 8),
+        tileMap.get(0 + 24, 0, 8, 8),
+        tileMap.get(0 + 24, 8, 8, 8),
+        tileMap.get(8 + 24, 0, 8, 8),
+        tileMap.get(16 + 24, 0, 8, 8),
+        tileMap.get(8 + 24, 8, 8, 8),
+        tileMap.get(8 + 24, 8, 8, 8),
+    ];
+    createCanvas(950, 950);
     background(51);
-    room = new Room(roomTemplates.level2, 50, tiles);
+    room = new Room(roomTemplates.level1, 50, tiles);
+    player = new Player(playerSprite, 50, 50, 20, 40);
 }
 
 function draw() {
     room.draw();
     player.draw();
+
+    if (keyIsDown(UP_ARROW)) {
+        player.move("up");
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+        player.move("down");
+    }
+    if (keyIsDown(LEFT_ARROW)) {
+        player.move("left");
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+        player.move("right");
+    }
 }
 
 function arrayFromMap(img, size) {
@@ -38,3 +53,5 @@ function arrayFromMap(img, size) {
     }
     console.log("[" + arr.join("") + "]");
 }
+
+function keyIsDown() {}

@@ -4,7 +4,7 @@ class Player {
         this.pos = createVector(x, y);
         this.width = playerWidth;
         this.height = playerHeight;
-        this.velocity = 1;
+        this.velocity = 5;
         this.health = 100;
         this.maxHealth = 100;
     }
@@ -17,15 +17,46 @@ class Player {
         switch (direction) {
             case "up":
                 this.pos.y -= this.velocity;
+                if (
+                    room.getTileFloor(this.pos.x, this.pos.y) ||
+                    room.getTileFloor(this.pos.x + this.width, this.pos.y)
+                ) {
+                    this.pos.y += this.velocity;
+                }
                 break;
             case "down":
                 this.pos.y += this.velocity;
+                if (
+                    room.getTileFloor(this.pos.x, this.pos.y + this.height) ||
+                    room.getTileFloor(
+                        this.pos.x + this.width,
+                        this.pos.y + this.height
+                    )
+                ) {
+                    this.pos.y -= this.velocity;
+                }
                 break;
             case "left":
                 this.pos.x -= this.velocity;
+                if (
+                    room.getTileFloor(this.pos.x, this.pos.y) ||
+                    room.getTileFloor(this.pos.x, this.pos.y + this.height)
+                ) {
+                    this.pos.x += this.velocity;
+                }
                 break;
             case "right":
                 this.pos.x += this.velocity;
+                if (
+                    room.getTileFloor(this.pos.x + this.width, this.pos.y) ||
+                    room.getTileFloor(
+                        this.pos.x + this.width,
+                        this.pos.y + this.height
+                    )
+                ) {
+                    this.pos.x -= this.velocity;
+                    print("ping", room.getTileFloor(this.pos.x, this.pos.y));
+                }
                 break;
             default:
                 console.error("test");

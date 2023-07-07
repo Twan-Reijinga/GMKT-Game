@@ -6,9 +6,16 @@ class Room {
     }
 
     getTileFloor(x, y) {
-        tileX = Math.floor(x / this.tileSize);
-        tileY = Math.floor(y / this.tileSize);
-        return this.map[tileY][tileX];
+        let tileX = Math.floor(x / this.tileSize);
+        let tileY = Math.floor(y / this.tileSize);
+        console.log(tileX, tileY, this.map[tileY], this.map[tileY][tileX]);
+        if (
+            this.map[tileY] !== undefined &&
+            this.map[tileY][tileX] !== undefined
+        ) {
+            return this.map[tileY][tileX];
+        }
+        return -1;
     }
 
     getRequiredTile(x, y, map) {
