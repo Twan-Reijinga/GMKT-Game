@@ -1,6 +1,6 @@
 class Room {
     constructor(Room, tileSize, tiles) {
-        this.map = Room[map];
+        this.map = Room.map;
         this.tileSize = tileSize;
         this.tiles = tiles;
     }
@@ -21,7 +21,7 @@ class Room {
         noSmooth();
         for (let y = 0; y < this.map.length; y++){
             for (let x = 0; x < this.map[0].length; x++){
-
+                
             }
         }
     }
