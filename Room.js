@@ -8,6 +8,6 @@ class Room {
     }
 
     draw() {
-        
+        noSmooth
     }
 }
