@@ -1,8 +1,20 @@
 function preload() {
     tiles = {
-        W: loadImage("textures/Ground.png"),
-        G: loadImage("textures/Brick.png"),
-        R: loadImage("textures/Roof.png"),
+        W: {
+            texture: loadImage("textures/Ground.png"),
+            walkable: false,
+            generationChange: 5,
+        },
+        G: {
+            texture: loadImage("textures/Brick.png"),
+            walkable: true,
+            generationChange: 5,
+        },
+        R: {
+            texture: loadImage("textures/Roof.png"),
+            walkable: false,
+            generationChange: 190,
+        },
     };
 }
 
