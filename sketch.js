@@ -20,3 +20,6 @@ function setup() {
 function draw() {
     room.draw();
 }
+function draw() {
+    room.draw();
+}
