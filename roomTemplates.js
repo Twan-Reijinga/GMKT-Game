@@ -9,7 +9,7 @@ roomTemplates = {
             src: "Ground.png"
         },
         {
-            type: "G",
+            type: "R",
             src: "Roof.png"
         }
     ],
