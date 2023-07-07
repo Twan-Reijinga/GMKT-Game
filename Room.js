@@ -15,5 +15,6 @@ class Room {
 
     draw() {
         noSmooth();
+        
     }
 }
