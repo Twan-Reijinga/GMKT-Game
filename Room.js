@@ -2,8 +2,6 @@ class Room {
     constructor(Room, tileSize, tiles) {
         this.map = Room[map];
         this.tileSize = tileSize;
-        this.height = roomPattern.length;
-        this.width = roomPattern[0].length;
         this.tiles = tiles;
     }
 
@@ -15,7 +13,7 @@ class Room {
 
     getRequiredTile(x, y, map){
         if (y == map.length){
-            
+
         }
     }
 
