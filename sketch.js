@@ -5,3 +5,10 @@ function setup() {
 function draw() {
 
 }
+
+function drawBackGround(offset){
+    DrawRoom(offset);
+}
+
+function DrawRoom(offset){
+}
