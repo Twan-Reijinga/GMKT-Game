@@ -12,7 +12,7 @@ class Room {
     draw() {
         noSmooth();
         for (let i = 0; i < this.pattern.length; i++) {
-            for (let j = 0; j < this.pattern[0].length; j++) {
+            for (let j = 0; j < this.pattern[i].length; j++) {
                 image(
                     this.tiles[this.pattern[i][j]].texture,
                     j * this.tileSize,
