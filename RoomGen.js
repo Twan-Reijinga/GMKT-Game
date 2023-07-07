@@ -54,7 +54,12 @@ function GenerateRoom(tile, pattern){
     // else if (pattern[tile.x][tile.y - 1] == "R") pattern[tile.x][tile.y] ="G";
     // else if (pattern[tile.x][tile.y + 1] == "W") pattern[tile.x][tile.y] ="G";
     // else pattern[tile.x][tile.y] = "W";
+
     pattern[tile.x][tile.y] = getWeightedRandomTile();
+    if(tile.x < pattern.length && pattern[tile.x + 1][tile.y] == "W") pattern[tile.x][tile.y] = "R";
+    else if (tile.x > 0 && pattern[tile.x - 1][tile.y] == "R") pattern[tile.x][tile.y] = "W";
+    // pattern[3][4] = "W";
+    // pattern[2][4] = "R";
 
     neighbours = getNeighbours(tile, pattern);
 
@@ -63,7 +68,7 @@ function GenerateRoom(tile, pattern){
     while (emptyNeighbours.length > 0){
         pattern = GenerateRoom(emptyNeighbours.shift(), pattern);
     }
-    return pattern
+    return pattern;
 }
 
 function getEmptyNeighbours(tile, pattern){

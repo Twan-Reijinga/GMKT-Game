@@ -1,4 +1,5 @@
 function preload() {
+    maze = loadImage("maze.png");
     tiles = {
         W: {
             texture: loadImage("textures/Brick.png"),
@@ -25,7 +26,7 @@ function preload() {
 function setup() {
     createCanvas(1000, 1000);
     background(51);
-    room = new Room(MakeRoom(10, 10), 100, tiles);
+    room = new Room(level1, 50, tiles);
 }
 
 function draw() {
