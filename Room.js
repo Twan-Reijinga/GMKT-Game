@@ -13,8 +13,18 @@ class Room {
         return map[tileY][tileX];
     }
 
+    getRequiredTile(x, y, map){
+        if (y == map.length){
+            
+        }
+    }
+
     draw() {
         noSmooth();
-        
+        for (let y = 0; y < this.map.length; y++){
+            for (let x = 0; x < this.map[0].length; x++){
+
+            }
+        }
     }
 }
