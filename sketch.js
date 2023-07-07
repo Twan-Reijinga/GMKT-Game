@@ -1,27 +1,27 @@
 function preload() {
     tiles = {
         W: {
-            texture: loadImage("textures/Ground.png"),
+            texture: loadImage("textures/Brick.png"),
             walkable: false,
-            generationChange: 5,
+            generationChance: 5,
         },
         G: {
-            texture: loadImage("textures/Brick.png"),
+            texture: loadImage("textures/Ground.png"),
             walkable: true,
-            generationChange: 5,
+            generationChance: 5,
         },
         R: {
             texture: loadImage("textures/Roof.png"),
             walkable: false,
-            generationChange: 190,
+            generationChance: 190,
         },
     };
 }
 
 function setup() {
-    createCanvas(300, 300);
+    createCanvas(1000, 1000);
     background(51);
-    room = new Room(roomTemplates.level1, 100, tiles);
+    room = new Room(MakeRoom(10, 10), 100, tiles);
 }
 
 function draw() {
