@@ -10,22 +10,22 @@ class Room {
     interact(x, y) {
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
-        console.log(tileX, tileY);
         for (x = -1; x < 2; x++) {
             for (y = -1; y < 2; y++) {
                 for (let i = 0; i < this.levers.length; i++) {
                     console.log(
-                        this.levers[i][0],
-                        this.levers[i][1],
-                        tileX + x,
-                        tileY + y
+                        [this.levers[i][0], this.levers[i][1]],
+                        [tileX + x, tileY + y],
+                        [x, y]
                     );
                     if (
                         this.levers[i][0] == tileX + x &&
-                        this.levers[i][1] == tileY + y
+                        this.levers[i][1] == tileY + y &&
+                        (x != 0 || y != 0)
                     ) {
-                        this.map[this.levers[i][3]][this.levers[i][2]] =
-                            !this.map[this.levers[i][3]][this.levers[i][2]];
+                        console.log("ye");
+                        this.map[tileY + y][tileX + x] =
+                            !this.map[tileY + y][tileX + x];
                     }
                 }
             }

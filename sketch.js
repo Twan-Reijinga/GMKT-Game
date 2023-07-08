@@ -4,6 +4,7 @@ function preload() {
 }
 
 function setup() {
+    keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
         tileMap.get(0, 0, 8, 8),
@@ -48,9 +49,10 @@ function player1Input() {
     if (keyIsDown(RIGHT_ARROW)) {
         player1.move("right");
     }
-    if (keyIsDown(13)) {
+    if (keyIsDown(13) && keyIsDown(13) != keyPressFlags[0]) {
         player1.interact(player2.TilePos);
     }
+    keyPressFlags[0] = keyIsDown(13);
 }
 
 function player2Input() {
@@ -67,9 +69,10 @@ function player2Input() {
     if (keyIsDown(68)) {
         player2.move("right");
     }
-    if (keyIsDown(82)) {
+    if (keyIsDown(82) && keyIsDown(82) != keyPressFlags[1]) {
         player2.interact(player1.tilePos);
     }
+    keyPressFlags[1] = keyIsDown(82);
 }
 
 function arrayFromMap(img, size) {
