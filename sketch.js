@@ -76,10 +76,25 @@ function setup() {
     setuplevel(roomTemplates.level3);
 }
 
-function setuplevel(level) {
+function copy2DArr(arr) {
+    newArr = [];
+    for (let y = 0; y < arr.length; y++) {
+        tmpArr = [];
+        for (let x = 0; x < arr[0].length; x++) {
+            tmpArr.push(arr[y][x]);
+        }
+        newArr.push(tmpArr);
+    }
+    return newArr;
+}
+
+function setuplevel(gameLevel) {
+    level = JSON.parse(JSON.stringify(gameLevel));
+
     room = undefined;
     player1 = undefined;
     player2 = undefined;
+
     room = new Room(level, tileSize, [tiles, levers]);
     let runnerStart = level.startPositions[0];
     let hunterStart = level.startPositions[1];
