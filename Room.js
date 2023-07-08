@@ -1,10 +1,16 @@
 class Room {
-    constructor(room, tileSize, tiles) {
-        this.map = room.map;
+    constructor(room, tileSize, tileMaps) {
         this.tileSize = tileSize;
-        this.tiles = tiles;
 
+        this.tiles = tileMaps[0];
+        this.leverTex = tileMaps[1];
+
+        this.map = room.map;
         this.bridges = room.bridges;
+        this.lever = room.switch;
+        this.escape = room.escape;
+
+        this.map[this.escape[1]][this.escape[0]] = true;
     }
 
     interact(x, y, isHunter) {
@@ -20,7 +26,16 @@ class Room {
                     ) {
                         console.log("ye");
                         this.map[tileY + y][tileX + x] = isHunter;
+                        return;
                     }
+                }
+                if (
+                    this.lever[0] == tileX &&
+                    this.lever[1] == tileY &&
+                    !isHunter
+                ) {
+                    this.lever[2] = true;
+                    this.map[this.escape[1]][this.escape[0]] = false;
                 }
             }
         }
@@ -79,7 +94,7 @@ class Room {
         noSmooth();
         for (let y = 0; y < this.map.length; y++) {
             for (let x = 0; x < this.map[0].length; x++) {
-                let img = tiles[this.getRequiredTile(x, y, this.map)];
+                let img = this.tiles[this.getRequiredTile(x, y, this.map)];
                 image(
                     img,
                     x * this.tileSize,
@@ -87,6 +102,18 @@ class Room {
                     this.tileSize,
                     this.tileSize
                 );
+                if (this.lever[0] == x && this.lever[1] == y) {
+                    let imglever =
+                        this.leverTex[this.lever[3] + 4 * this.lever[2]];
+
+                    image(
+                        imglever,
+                        x * this.tileSize,
+                        y * this.tileSize,
+                        this.tileSize,
+                        this.tileSize
+                    );
+                }
             }
         }
     }

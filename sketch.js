@@ -1,6 +1,7 @@
 function preload() {
     playerSprite = loadImage("textures/player.png");
     tileMap = loadImage("textures/tiles.png");
+    leverMap = loadImage("textures/buttons.png");
 }
 
 function setup() {
@@ -32,9 +33,22 @@ function setup() {
         tileMap.get(16 + 24, 0 + 16, 8, 8),
         tileMap.get(8 + 24, 8 + 16, 8, 8),
     ];
+
+    levers = [
+        leverMap.get(0, 0, 8, 8),
+        leverMap.get(0, 8, 8, 8),
+        leverMap.get(8, 8, 8, 8),
+        leverMap.get(8, 0, 8, 8),
+
+        leverMap.get(0 + 16, 0, 8, 8), //enabled = disabled + 5
+        leverMap.get(0 + 16, 8, 8, 8),
+        leverMap.get(8 + 16, 8, 8, 8),
+        leverMap.get(8 + 16, 0, 8, 8),
+    ];
+
     createCanvas(1000, 1000);
     background(51);
-    room = new Room(roomTemplates.level2, tileSize, tiles);
+    room = new Room(roomTemplates.level2, tileSize, [tiles, levers]);
     player1 = new Player(playerSprite, 0, 0, 30, 30, true);
     player2 = new Player(playerSprite, 50, 50, 30, 30, false);
 }
