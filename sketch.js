@@ -48,8 +48,8 @@ function player1Input() {
     if (keyIsDown(RIGHT_ARROW)) {
         player1.move("right");
     }
-    if (keyIsDown(13)) {
-        player1.interact(player2.TilePos);
+    if (keyIsDown(13) || keyIsDown(16)) {
+        player1.interact(player2.getCenterPos());
     }
 }
 
@@ -68,7 +68,7 @@ function player2Input() {
         player2.move("right");
     }
     if (keyIsDown(82)) {
-        player2.interact(player1.tilePos);
+        player2.interact(player1.getCenterPos());
     }
 }
 

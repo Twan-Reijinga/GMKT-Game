@@ -3,13 +3,12 @@ class Player {
         this.orientation = 0;
         this.sprite = playerSprite;
         this.pos = createVector(x, y);
-        this.tilePos = createVector(Math.floor(x / tileSize, y / tileSize));
         this.width = playerWidth;
         this.height = playerHeight;
         this.velocity = 5;
         this.health = 100;
         this.maxHealth = 100;
-
+        this.captureDistance = 50;
         this.isHunter = isHunter;
     }
 
@@ -26,12 +25,20 @@ class Player {
             this.height
         );
         rotate(-(PI / 180) * rotations[this.orientation]);
-        translate(
-            -(this.pos.x + this.width / 2),
-            -(this.pos.y + this.height / 2)
+        let pos = this.getCenterPos();
+        translate(-pos.x, -pos.y);
+        if (this.isHunter) {
+            this.drawCaptureRadius();
+        }
+    }
+
+    drawCaptureRadius() {
+        noFill();
+        circle(
+            this.pos.x + this.width / 2,
+            this.pos.y + this.height / 2,
+            this.captureDistance * 2
         );
-        this.tilePos.x = this.pos.x / tileSize;
-        this.tilePos.y = this.pos.y / tileSize;
     }
 
     move(direction) {
@@ -102,8 +109,6 @@ class Player {
                     let rightdist =
                         tileSize - ((this.pos.x % tileSize) + this.width);
                     this.pos.x += rightdist - 1;
-
-                    print("ping", room.getTileFloor(this.pos.x, this.pos.y)); //vergeet niet dit weg te halen
                 }
                 break;
             default:
@@ -111,8 +116,22 @@ class Player {
         }
     }
 
-    interact(otherPLayerPos) {
-        room.interact(this.pos.x, this.pos.y);
+    getCenterPos() {
+        return createVector(
+            this.pos.x + this.width / 2,
+            this.pos.y + this.height / 2
+        );
+    }
+
+    interact(otherPlayerPos) {
+        let pos = this.getCenterPos();
+        let distance = dist(pos.x, pos.y, otherPlayerPos.x, otherPlayerPos.y);
+
+        if (this.isHunter && distance <= this.captureDistance) {
+            console.log("captured!");
+        } else {
+            room.interact(this.pos.x, this.pos.y);
+        }
     }
 
     setHealth(health) {
