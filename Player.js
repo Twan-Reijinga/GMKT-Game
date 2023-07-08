@@ -35,6 +35,8 @@ class Player {
         translate(-pos.x, -pos.y);
         if (this.isHunter) {
             this.drawCaptureRadius();
+        } else {
+            room.detectWin(this);
         }
     }
 

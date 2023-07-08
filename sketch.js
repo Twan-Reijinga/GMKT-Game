@@ -1,6 +1,13 @@
 let room;
 let player1;
 let player2;
+let winner = null;
+
+const STATES = {
+    MENU: 0,
+    RUNNING: 1,
+    FINISHED: 2,
+};
 
 function preload() {
     player1Sprite = loadImage("textures/player1.png");
@@ -90,6 +97,11 @@ function setuplevel(level) {
 }
 
 function draw() {
+    if (winner == player1) {
+        console.log("player1 wins");
+    } else if (winner == player2) {
+        console.log("player 2 wins!!");
+    }
     room.draw();
     player1.draw();
     player1Input();

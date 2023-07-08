@@ -86,6 +86,14 @@ class Room {
         return this.map[tileY][tileX];
     }
 
+    detectWin(player) {
+        let tileX = Math.floor(player.pos.x / this.tileSize);
+        let tileY = Math.floor(player.pos.y / this.tileSize);
+        if (tileX == this.escape[0] && tileY == this.escape[1]) {
+            winner = player;
+        }
+    }
+
     isSpecial(x, y) {
         if (x == this.escape[0] && y == this.escape[1] && this.lever[2] == true)
             return true;
