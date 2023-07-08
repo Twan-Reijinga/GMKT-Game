@@ -23,19 +23,21 @@ class Room {
 
     getRequiredTile(x, y, map) {
         let val = 0;
-        let right = false;
-        let bottom = false;
+        let left = false;
+        let top = false;
         let corner = false;
-        if (x == map[0].length - 1 || map[y][x] != map[y][x + 1]) right = true;
-        if (y == map.length - 1 || map[y][x] != map[y + 1][x]) bottom = true;
-        if (right || bottom || map[y][x] != map[y + 1][x + 1]) corner = true;
-        if (corner && !right && !bottom) {
+
+        if (x == 0 || map[y][x] != map[y][x - 1]) left = true;
+        if (y == 0 || map[y][x] != map[y - 1][x]) top = true;
+        if (left || top || map[y][x] != map[y - 1][x - 1]) corner = true;
+
+        if (corner && !left && !top) {
             val = 0;
-        } else if (right && bottom) {
+        } else if (left && top) {
             val = 1;
-        } else if (!right && bottom) {
+        } else if (!left && top) {
             val = 2;
-        } else if (right && !bottom) {
+        } else if (left && !top) {
             val = 3;
         } else {
             val = 4;
