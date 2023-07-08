@@ -49,10 +49,13 @@ function player1Input() {
     if (keyIsDown(RIGHT_ARROW)) {
         player1.move("right");
     }
-    if (keyIsDown(13) && keyIsDown(13) != keyPressFlags[0]) {
-        player1.interact(player2.TilePos);
+    if (
+        (keyIsDown(13) || keyIsDown(16)) &&
+        (keyIsDown(13) || keyIsDown(16)) != keyPressFlags[0]
+    ) {
+        player1.interact(player2.getCenterPos());
     }
-    keyPressFlags[0] = keyIsDown(13);
+    keyPressFlags[0] = keyIsDown(13) || keyIsDown(16);
 }
 
 function player2Input() {
@@ -70,7 +73,7 @@ function player2Input() {
         player2.move("right");
     }
     if (keyIsDown(82) && keyIsDown(82) != keyPressFlags[1]) {
-        player2.interact(player1.tilePos);
+        player2.interact(player1.getCenterPos());
     }
     keyPressFlags[1] = keyIsDown(82);
 }
