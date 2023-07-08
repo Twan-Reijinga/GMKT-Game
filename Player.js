@@ -8,11 +8,17 @@ class Player {
         this.velocity = 5;
         this.health = 100;
         this.maxHealth = 100;
-        this.captureDistance = 50;
+        this.captureDistance = tileSize * 1.5;
         this.isHunter = isHunter;
+
+        this.cooldownlength = 60;
+        this.cooldown = 0;
     }
 
     draw() {
+        if (this.cooldown > 0) this.cooldown -= 1;
+        else this.cooldown = 0;
+
         let rotations = [0, 90, 180, 270];
         noSmooth(); //behoudt pixel-style
         translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
@@ -128,11 +134,15 @@ class Player {
         let pos = this.getCenterPos();
         let distance = dist(pos.x, pos.y, otherPlayerPos.x, otherPlayerPos.y);
 
-        if (this.isHunter && distance <= this.captureDistance) {
+        if (
+            this.isHunter &&
+            distance <= this.captureDistance &&
+            this.cooldown == 0
+        ) {
             console.log("captured!");
             this.reverseRoles(this, otherPlayer);
         } else {
-            room.interact(this.pos.x, this.pos.y, this.isHunter);
+            room.interact(this);
         }
     }
 
@@ -142,6 +152,7 @@ class Player {
         hunter.pos = runnerPos;
         runner.pos = hunterPos;
 
+        runner.cooldown = runner.cooldownlength;
         hunter.isHunter = false;
         runner.isHunter = true;
     }

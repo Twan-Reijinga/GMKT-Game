@@ -13,7 +13,12 @@ class Room {
         this.map[this.escape[1]][this.escape[0]] = true;
     }
 
-    interact(x, y, isHunter) {
+    interact(player) {
+        let x = player.pos.x;
+        let y = player.pos.y;
+        let isHunter = player.isHunter;
+
+        let arr = [];
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
         for (x = -1; x < 2; x++) {
@@ -24,8 +29,9 @@ class Room {
                         this.bridges[i][1] == tileY + y &&
                         (x != 0 || y != 0)
                     ) {
-                        this.map[tileY + y][tileX + x] = isHunter;
-                        return;
+                        arr.push([tileX + x, tileY + y]);
+                        // this.map[tileY + y][tileX + x] = isHunter;
+                        // return;
                     }
                 }
                 if (
@@ -37,6 +43,23 @@ class Room {
                     this.map[this.escape[1]][this.escape[0]] = false;
                 }
             }
+        }
+        if (arr.length != 0) {
+            let smallest = Infinity;
+            let index = -1;
+            for (let i = 0; i < arr.length; i++) {
+                let dist = sqrt(
+                    (player.getCenterPos().x - arr[i][0]) ** 2 +
+                        (player.getCenterPos().y - arr[i][1]) ** 2
+                );
+                console.log(dist);
+                if (dist < smallest) {
+                    smallest = dist;
+                    index = i;
+                }
+            }
+            console.log(index);
+            this.map[arr[index][1]][arr[index][0]] = isHunter;
         }
     }
 
