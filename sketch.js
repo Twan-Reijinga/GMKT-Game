@@ -1,13 +1,15 @@
-let room;
-let player1;
-let player2;
-let winner = null;
+var room;
+var player1;
+var player2;
+var winner = null;
 
-const STATES = {
+const states = {
     MENU: 0,
     RUNNING: 1,
     FINISHED: 2,
 };
+
+var state = states.RUNNING;
 
 function preload() {
     player1Sprite = loadImage("textures/player1.png");
@@ -75,6 +77,9 @@ function setup() {
 }
 
 function setuplevel(level) {
+    room = undefined;
+    player1 = undefined;
+    player2 = undefined;
     room = new Room(level, tileSize, [tiles, levers]);
     let runnerStart = level.startPositions[0];
     let hunterStart = level.startPositions[1];
@@ -97,17 +102,41 @@ function setuplevel(level) {
 }
 
 function draw() {
-    if (winner == player1) {
-        console.log("player1 wins");
-    } else if (winner == player2) {
-        console.log("player 2 wins!!");
-    }
-    room.draw();
-    player1.draw();
-    player1Input();
+    if (state == states.RUNNING) {
+        if (winner != null) {
+            state = states.FINISHED;
+        }
 
-    player2.draw();
-    player2Input();
+        room.draw();
+        player1.draw();
+        player1Input();
+
+        player2.draw();
+        player2Input();
+    } else if (state == states.FINISHED) {
+        background(51);
+        textAlign(CENTER);
+        textSize(45);
+        fill(255, 255, 255);
+        text("Press R to restart", width / 2, height / 2);
+        text("Press M to go back to the menu", width / 2, height / 2 + 200);
+        textSize(55);
+        if (winner == player1) {
+            fill(0, 0, 255);
+            text("Player 1 wins the game!", width / 2, height / 2 - 200);
+        } else if (winner == player2) {
+            fill(255, 0, 0);
+            text("Player 2 wins the game!", width / 2, height / 2 - 200);
+        } else {
+            text("How did I get here?", width / 2, height / 2 - 200);
+        }
+
+        if (keyIsDown(82)) {
+            setuplevel(roomTemplates.level3);
+            state = states.RUNNING;
+            winner = null;
+        }
+    }
 }
 
 function player1Input() {
