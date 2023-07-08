@@ -1,6 +1,6 @@
 function preload() {
     playerSprite = loadImage("textures/player.png");
-    tileMap = loadImage("textures/newtiles.png");
+    tileMap = loadImage("textures/tiles.png");
 }
 
 function setup() {
