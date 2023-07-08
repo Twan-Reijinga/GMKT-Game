@@ -39,7 +39,8 @@ class Player {
     }
 
     drawCaptureRadius() {
-        noFill();
+        noStroke();
+        fill(0, 0, 0, 20);
         circle(
             this.pos.x + this.width / 2,
             this.pos.y + this.height / 2,
