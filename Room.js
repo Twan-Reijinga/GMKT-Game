@@ -86,6 +86,17 @@ class Room {
         return this.map[tileY][tileX];
     }
 
+    isSpecial(x, y) {
+        if (x == this.escape[0] && y == this.escape[1] && this.lever[2] == true)
+            return true;
+        for (let i = 0; i < this.barriers.length; i++) {
+            if (this.barriers[i][0] == x && this.barriers[i][1] == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     isBridge(x, y) {
         for (let i = 0; i < this.bridges.length; i++) {
             if (this.bridges[i][0] == x && this.bridges[i][1] == y) {
@@ -116,7 +127,11 @@ class Room {
         } else {
             val = 4;
         }
-        val = val + 5 * (map[y][x] == 1) + 10 * this.isBridge(x, y);
+        val =
+            val +
+            5 * (map[y][x] == 1) +
+            10 * this.isBridge(x, y) +
+            20 * this.isSpecial(x, y);
         return val;
     }
 

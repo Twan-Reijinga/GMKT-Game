@@ -13,7 +13,7 @@ function setup() {
     keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
-        //dark <-> light = +- 5 | bridge <-> floor = +- 10
+        //dark <-> light = +- 5 | bridge <-> floor = +- 10 | normal <-> barrier/win = +- 15
         tileMap.get(0, 0, 8, 8), // dark textures
         tileMap.get(0, 8, 8, 8),
         tileMap.get(8, 0, 8, 8),
@@ -37,6 +37,18 @@ function setup() {
         tileMap.get(8 + 24, 0 + 16, 8, 8),
         tileMap.get(16 + 24, 0 + 16, 8, 8),
         tileMap.get(8 + 24, 8 + 16, 8, 8),
+
+        tileMap.get(0, 0 + 32, 8, 8), // win area textures
+        tileMap.get(0, 8 + 32, 8, 8),
+        tileMap.get(8, 0 + 32, 8, 8),
+        tileMap.get(16, 0 + 32, 8, 8),
+        tileMap.get(8, 8 + 32, 8, 8),
+
+        tileMap.get(0 + 24, 0 + 32, 8, 8), // barrier textures
+        tileMap.get(0 + 24, 8 + 32, 8, 8),
+        tileMap.get(8 + 24, 0 + 32, 8, 8),
+        tileMap.get(16 + 24, 0 + 32, 8, 8),
+        tileMap.get(8 + 24, 8 + 32, 8, 8),
     ];
 
     levers = [
