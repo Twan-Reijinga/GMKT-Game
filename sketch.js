@@ -6,6 +6,7 @@ let mapOffset;
 let tileSize;
 let canvasSize;
 let mapSize;
+let currentLevel;
 
 const states = {
     MENU: 0,
@@ -13,16 +14,18 @@ const states = {
     FINISHED: 2,
 };
 
-var state = states.RUNNING;
+var state = states.MENU;
 
 function preload() {
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
+    menuBackground = loadImage("textures/background.png");
 }
 
 function setup() {
+    currentLevel = roomTemplates.level1;
     tileSize = 50;
 
     canvasSize = [1920, 1080];
@@ -82,7 +85,7 @@ function setup() {
     ];
     createCanvas(canvasSize[0], canvasSize[1]);
     background(51);
-    setuplevel(roomTemplates.level1);
+    setuplevel(currentLevel);
 }
 
 function calculateMapOffset(size) {
@@ -126,6 +129,7 @@ function setuplevel(gameLevel) {
 function draw() {
     switch (state) {
         case states.MENU: {
+            drawMenu();
             break;
         }
         case states.RUNNING: {
@@ -153,13 +157,17 @@ function draw() {
     }
 }
 
+function drawMenu() {
+    image(menuBackground, 0, 0, width, height);
+}
+
 function drawWinScreen() {
     background(51);
     textAlign(CENTER);
     textSize(45);
     fill(255, 255, 255);
-    text("Press R to restart", width / 2, height / 2);
-    text("Press M to go back to the menu", width / 2, height / 2 + 200);
+    text("Press R to play again.", width / 2, height / 2);
+    text("Press M to go back to the menu.", width / 2, height / 2 + 200);
     textSize(55);
     if (winner == player1) {
         fill(0, 0, 255);
@@ -173,7 +181,7 @@ function drawWinScreen() {
 }
 function getWinScreenInputs() {
     if (keyIsDown(82)) {
-        setuplevel(roomTemplates.level3);
+        setuplevel(currentLevel);
         state = states.RUNNING;
     }
 }
