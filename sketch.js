@@ -11,7 +11,6 @@ function preload() {
 }
 
 function setup() {
-    mapFromImg(map2, 21);
     keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
@@ -52,7 +51,7 @@ function setup() {
         leverMap.get(8 + 16, 8, 8, 8),
         leverMap.get(8 + 16, 0, 8, 8),
     ];
-    createCanvas(1000, 1000);
+    createCanvas(1050, 1050);
     background(51);
     setuplevel(roomTemplates.level2);
 }
@@ -134,40 +133,48 @@ function player2Input() {
 function mapFromImg(img, size) {
     let floor0 = ["818181", "FF0000", "000000", "444444"];
     let bridges = ["000000", "FFFFFF"];
+    let exit = "0000FF";
     let button = "FF0000";
     let rStart = "444444";
-    let hStart = "888888";
+    let hStart = "999999";
     map = [];
     bridgeArr = [];
-    buttonFin = [];
     startpositions = [[], []];
+    mapExit = "";
+    buttonFin = "";
     for (let y = 0; y < size; y++) {
         maprow = [];
         for (let x = 0; x < size; x++) {
             //get Layer
             col = img.get(x, y);
             col.pop();
-            console.log(col);
             hexarr = hex(col, 6);
 
             hexcol =
                 hexarr[0].slice(-2) + hexarr[1].slice(-2) + hexarr[2].slice(-2);
-
-            console.log(hexcol);
             if (floor0.includes(hexcol)) {
                 maprow.push(0);
             } else maprow.push(1);
 
             if (bridges.includes(hexcol)) {
-                bridgeArr.push([x, y]);
+                bridgeArr.push("[" + x + ", " + y + "],");
+            } else if (hexcol == exit) {
+                mapExit = "[" + x + ", " + y + "],";
             } else if (hexcol == button) {
-                buttonFin = [x, y, false, 0];
-            } else if ((hexcol = rStart)) {
-                startpositions[0] = [x, y];
+                buttonFin = "[" + x + ", " + y + ", false, 0],";
+            } else if (hexcol == rStart) {
+                startpositions[0] = "[" + x + ", " + y + "],";
+            } else if (hexcol == hStart) {
+                startpositions[1] = "[" + x + ", " + y + "],";
             }
         }
-        str = "[ " + maprow.join(",") + " ],\n";
-        map.push(str);
+        tmpstr = "[ " + maprow.join(",") + " ],\n";
+        map.push(tmpstr);
     }
-    console.log("[" + map.join("") + "]");
+    mapStr = "map: [" + map.join("") + "], \n";
+    bridgesStr = "bridges: [" + bridgeArr.join("") + "],\n";
+    exitStr = "escape: " + mapExit;
+    buttonStr = "switch: " + buttonFin;
+    startStr = "startPositions: [" + startpositions.join("") + "]";
+    console.log(mapStr + bridgesStr + exitStr + buttonStr + startStr);
 }
