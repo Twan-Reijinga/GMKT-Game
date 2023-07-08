@@ -53,7 +53,7 @@ function player1Input() {
         (keyIsDown(13) || keyIsDown(16)) &&
         (keyIsDown(13) || keyIsDown(16)) != keyPressFlags[0]
     ) {
-        player1.interact(player2.getCenterPos());
+        player1.interact(player2);
     }
     keyPressFlags[0] = keyIsDown(13) || keyIsDown(16);
 }
@@ -73,7 +73,7 @@ function player2Input() {
         player2.move("right");
     }
     if (keyIsDown(82) && keyIsDown(82) != keyPressFlags[1]) {
-        player2.interact(player1.getCenterPos());
+        player2.interact(player1);
     }
     keyPressFlags[1] = keyIsDown(82);
 }
