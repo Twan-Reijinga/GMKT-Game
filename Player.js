@@ -123,15 +123,27 @@ class Player {
         );
     }
 
-    interact(otherPlayerPos) {
+    interact(otherPlayer) {
+        let otherPlayerPos = otherPlayer.getCenterPos();
         let pos = this.getCenterPos();
         let distance = dist(pos.x, pos.y, otherPlayerPos.x, otherPlayerPos.y);
 
         if (this.isHunter && distance <= this.captureDistance) {
             console.log("captured!");
+            this.reverseRolls(this, otherPlayer);
         } else {
             room.interact(this.pos.x, this.pos.y);
         }
+    }
+
+    reverseRolls(hunter, runner) {
+        let hunterPos = hunter.pos;
+        let runnerPos = runner.pos;
+        hunter.pos = runnerPos;
+        runner.pos = hunterPos;
+
+        hunter.isHunter = false;
+        runner.isHunter = true;
     }
 
     setHealth(health) {
