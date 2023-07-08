@@ -8,8 +8,28 @@ class Room {
     }
 
     interact(x, y) {
-        let tileX = math.floor(x / this.tileSize);
-        let tileY = math.floor(y / this.tileSize);
+        let tileX = Math.floor(x / this.tileSize);
+        let tileY = Math.floor(y / this.tileSize);
+
+        for (x = -1; x < 2; x++) {
+            for (y = -1; y < 2; y++) {
+                for (let i = 0; i < this.levers.length; i++) {
+                    console.log(
+                        this.levers[i][0],
+                        this.levers[i][1],
+                        tileX + x,
+                        tileY + y
+                    );
+                    if (
+                        this.levers[i][0] == tileX + x &&
+                        this.levers[i][1] == tileY + y
+                    ) {
+                        map[this.levers[i][3]][this.levers[i][2]] =
+                            !map[this.levers[i][3]][this.levers[i][2]];
+                    }
+                }
+            }
+        }
     }
 
     getTileFloor(x, y) {
