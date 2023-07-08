@@ -19,6 +19,7 @@ function preload() {
 }
 
 function setup() {
+    // mapFromImg(bigmap, 39);
     keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
@@ -91,6 +92,7 @@ function copy2DArr(arr) {
 function setuplevel(gameLevel) {
     level = JSON.parse(JSON.stringify(gameLevel));
 
+    winner = undefined;
     room = undefined;
     player1 = undefined;
     player2 = undefined;
@@ -117,40 +119,56 @@ function setuplevel(gameLevel) {
 }
 
 function draw() {
-    if (state == states.RUNNING) {
-        if (winner != null) {
-            state = states.FINISHED;
+    switch (state) {
+        case states.MENU: {
+            break;
         }
+        case states.RUNNING: {
+            if (winner != null) {
+                state = states.FINISHED;
+            }
 
-        room.draw();
-        player1.draw();
-        player1Input();
+            room.draw();
+            player1.draw();
+            player1Input();
 
-        player2.draw();
-        player2Input();
-    } else if (state == states.FINISHED) {
-        background(51);
-        textAlign(CENTER);
-        textSize(45);
-        fill(255, 255, 255);
-        text("Press R to restart", width / 2, height / 2);
-        text("Press M to go back to the menu", width / 2, height / 2 + 200);
-        textSize(55);
-        if (winner == player1) {
-            fill(0, 0, 255);
-            text("Player 1 wins the game!", width / 2, height / 2 - 200);
-        } else if (winner == player2) {
-            fill(255, 0, 0);
-            text("Player 2 wins the game!", width / 2, height / 2 - 200);
-        } else {
-            text("How did I get here?", width / 2, height / 2 - 200);
+            player2.draw();
+            player2Input();
+            break;
         }
-
-        if (keyIsDown(82)) {
-            setuplevel(roomTemplates.level3);
-            state = states.RUNNING;
-            winner = null;
+        case states.FINISHED: {
+            drawWinScreen();
+            getWinScreenInputs();
+            break;
         }
+        default: {
+            break;
+        }
+    }
+}
+
+function drawWinScreen() {
+    background(51);
+    textAlign(CENTER);
+    textSize(45);
+    fill(255, 255, 255);
+    text("Press R to restart", width / 2, height / 2);
+    text("Press M to go back to the menu", width / 2, height / 2 + 200);
+    textSize(55);
+    if (winner == player1) {
+        fill(0, 0, 255);
+        text("Player 1 wins the game!", width / 2, height / 2 - 200);
+    } else if (winner == player2) {
+        fill(255, 0, 0);
+        text("Player 2 wins the game!", width / 2, height / 2 - 200);
+    } else {
+        text("How did I get here?", width / 2, height / 2 - 200);
+    }
+}
+function getWinScreenInputs() {
+    if (keyIsDown(82)) {
+        setuplevel(roomTemplates.level3);
+        state = states.RUNNING;
     }
 }
 
@@ -191,10 +209,10 @@ function player2Input() {
     if (keyIsDown(68)) {
         player2.move("right");
     }
-    if (keyIsDown(82) && keyIsDown(82) != keyPressFlags[1]) {
+    if (keyIsDown(70) && keyIsDown(70) != keyPressFlags[1]) {
         player2.interact(player1);
     }
-    keyPressFlags[1] = keyIsDown(82);
+    keyPressFlags[1] = keyIsDown(70);
 }
 
 function mapFromImg(img, size) {
