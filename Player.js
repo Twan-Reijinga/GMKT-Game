@@ -3,6 +3,7 @@ class Player {
         this.orientation = 0;
         this.sprite = playerSprite;
         this.pos = createVector(x, y);
+        this.tilePos = createVector(Math.floor(x / tileSize, y / tileSize));
         this.width = playerWidth;
         this.height = playerHeight;
         this.velocity = 5;
@@ -16,7 +17,7 @@ class Player {
         let rotations = [0, 90, 180, 270];
         noSmooth(); //behoudt pixel-style
         translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
-        rotate((PI / 180) * rotations[this.orientation]);
+        rotate((PI / 180) * rotations[this.orientation]); //rotations
         image(
             this.sprite,
             -this.width / 2,
@@ -29,6 +30,8 @@ class Player {
             -(this.pos.x + this.width / 2),
             -(this.pos.y + this.height / 2)
         );
+        this.tilePos.x = this.pos.x / tileSize;
+        this.tilePos.y = this.pos.y / tileSize;
     }
 
     move(direction) {
@@ -104,8 +107,12 @@ class Player {
                 }
                 break;
             default:
-                console.error("test");
+                console.error("how are you moving my guy?");
         }
+    }
+
+    interact(otherPLayerPos) {
+        room.interact(x, y);
     }
 
     setHealth(health) {

@@ -21,8 +21,8 @@ function setup() {
     createCanvas(1000, 1000);
     background(51);
     room = new Room(roomTemplates.level2, tileSize, tiles);
-    player1 = new Player(playerSprite, 0, 0, 20, 20, true);
-    player2 = new Player(playerSprite, 50, 50, 20, 20, false);
+    player1 = new Player(playerSprite, 0, 0, 30, 30, true);
+    player2 = new Player(playerSprite, 50, 50, 30, 30, false);
 }
 
 function draw() {
@@ -48,6 +48,9 @@ function player1Input() {
     if (keyIsDown(RIGHT_ARROW)) {
         player1.move("right");
     }
+    if (keyIsDown(13)) {
+        player1.interact(player2.TilePos);
+    }
 }
 
 function player2Input() {
@@ -63,6 +66,9 @@ function player2Input() {
     }
     if (keyIsDown(68)) {
         player2.move("right");
+    }
+    if (keyIsDown(82)) {
+        player2.interact(player1.tilePos);
     }
 }
 

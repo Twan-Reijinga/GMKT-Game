@@ -3,7 +3,11 @@ class Room {
         this.map = room.map;
         this.tileSize = tileSize;
         this.tiles = tiles;
+
+        this.levers = room.levers;
     }
+
+    interact(x, y) {}
 
     getTileFloor(x, y) {
         if (
@@ -17,7 +21,6 @@ class Room {
 
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
-        console.log(tileX, tileY, this.map[tileY], this.map[tileY][tileX]);
         return this.map[tileY][tileX];
     }
 
