@@ -15,13 +15,15 @@ class Player {
         this.cooldown = 0;
     }
 
-    draw() {
+    draw(offset) {
         if (this.cooldown > 0) this.cooldown -= 1;
         else this.cooldown = 0;
 
         let rotations = [0, 90, 180, 270];
         noSmooth(); //behoudt pixel-style
-        translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
+        let Xtranslate = this.pos.x + this.width / 2 + offset.x;
+        let Ytranslate = this.pos.y + this.height / 2 + offset.y;
+        translate(Xtranslate, Ytranslate);
         rotate((PI / 180) * rotations[this.orientation]); //rotations
         image(
             this.sprite,
@@ -32,20 +34,20 @@ class Player {
         );
         rotate(-(PI / 180) * rotations[this.orientation]);
         let pos = this.getCenterPos();
-        translate(-pos.x, -pos.y);
+        translate(-Xtranslate, -Ytranslate);
         if (this.isHunter) {
-            this.drawCaptureRadius();
+            this.drawCaptureRadius(offset);
         } else {
             room.detectWin(this);
         }
     }
 
-    drawCaptureRadius() {
+    drawCaptureRadius(offset) {
         noStroke();
         fill(0, 0, 0, 20);
         circle(
-            this.pos.x + this.width / 2,
-            this.pos.y + this.height / 2,
+            this.pos.x + this.width / 2 + offset.x,
+            this.pos.y + this.height / 2 + offset.y,
             this.captureDistance * 2
         );
     }

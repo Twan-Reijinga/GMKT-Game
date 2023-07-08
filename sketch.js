@@ -1,7 +1,11 @@
-var room;
-var player1;
-var player2;
-var winner = null;
+let room;
+let player1;
+let player2;
+let winner = null;
+let mapOffset;
+let tileSize;
+let canvasSize;
+let mapSize;
 
 const states = {
     MENU: 0,
@@ -19,9 +23,13 @@ function preload() {
 }
 
 function setup() {
-    // mapFromImg(bigmap, 39);
-    keyPressFlags = [false, false];
     tileSize = 50;
+
+    canvasSize = [1920, 1080];
+    // mapOffset = createVector(0, 0);
+
+    keyPressFlags = [false, false];
+
     tiles = [
         //dark <-> light = +- 5 | bridge <-> floor = +- 10 | normal <-> barrier/win = +- 15
         tileMap.get(0, 0, 8, 8), // dark textures
@@ -72,21 +80,16 @@ function setup() {
         leverMap.get(8 + 16, 8, 8, 8),
         leverMap.get(8 + 16, 0, 8, 8),
     ];
-    createCanvas(1050, 1050);
+    createCanvas(canvasSize[0], canvasSize[1]);
     background(51);
-    setuplevel(roomTemplates.level3);
+    setuplevel(roomTemplates.level1);
 }
 
-function copy2DArr(arr) {
-    newArr = [];
-    for (let y = 0; y < arr.length; y++) {
-        tmpArr = [];
-        for (let x = 0; x < arr[0].length; x++) {
-            tmpArr.push(arr[y][x]);
-        }
-        newArr.push(tmpArr);
-    }
-    return newArr;
+function calculateMapOffset(size) {
+    totalsize = size * tileSize;
+    let Xoffset = (canvasSize[0] - totalsize) / 2;
+    let Yoffset = (canvasSize[1] - totalsize) / 2;
+    return createVector(Xoffset, Yoffset);
 }
 
 function setuplevel(gameLevel) {
@@ -98,6 +101,8 @@ function setuplevel(gameLevel) {
     player2 = undefined;
 
     room = new Room(level, tileSize, [tiles, levers]);
+
+    mapOffset = calculateMapOffset(room.map.length);
     let runnerStart = level.startPositions[0];
     let hunterStart = level.startPositions[1];
     player1 = new Player(
@@ -124,15 +129,16 @@ function draw() {
             break;
         }
         case states.RUNNING: {
+            background(51);
             if (winner != null) {
                 state = states.FINISHED;
             }
 
-            room.draw();
-            player1.draw();
+            room.draw(mapOffset);
+            player1.draw(mapOffset);
             player1Input();
 
-            player2.draw();
+            player2.draw(mapOffset);
             player2Input();
             break;
         }

@@ -143,15 +143,15 @@ class Room {
         return val;
     }
 
-    draw() {
+    draw(offset) {
         noSmooth();
         for (let y = 0; y < this.map.length; y++) {
             for (let x = 0; x < this.map[0].length; x++) {
                 let img = this.tiles[this.getRequiredTile(x, y, this.map)];
                 image(
                     img,
-                    x * this.tileSize,
-                    y * this.tileSize,
+                    x * this.tileSize + offset.x,
+                    y * this.tileSize + offset.y,
                     this.tileSize,
                     this.tileSize
                 );
@@ -161,8 +161,8 @@ class Room {
 
                     image(
                         imglever,
-                        x * this.tileSize,
-                        y * this.tileSize,
+                        x * this.tileSize + offset.x,
+                        y * this.tileSize + offset.y,
                         this.tileSize,
                         this.tileSize
                     );
