@@ -53,9 +53,18 @@ class Player {
                 this.pos.y -= this.velocity;
                 this.orientation = 3;
                 if (
-                    this.isHunter ^ room.getTileFloor(this.pos.x, this.pos.y) || //isHunter XOR die andere om te flippen als ishunter 1 is en niks te doen als 0(laat player op boven lopen).
                     this.isHunter ^
-                        room.getTileFloor(this.pos.x + this.width, this.pos.y)
+                        room.getTileFloor(
+                            this.pos.x,
+                            this.pos.y,
+                            this.isHunter
+                        ) || //isHunter XOR die andere om te flippen als ishunter 1 is en niks te doen als 0(laat player op boven lopen).
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x + this.width,
+                            this.pos.y,
+                            this.isHunter
+                        )
                 ) {
                     this.pos.y += this.velocity;
                     let updist = this.pos.y % tileSize; //updist/rightdist ect zorgd ervoor dat de player wel tegen een muur aan kan drukken (ik wil het wel uitleggen in een call)
@@ -69,12 +78,14 @@ class Player {
                     this.isHunter ^
                         room.getTileFloor(
                             this.pos.x,
-                            this.pos.y + this.height
+                            this.pos.y + this.height,
+                            this.isHunter
                         ) ||
                     this.isHunter ^
                         room.getTileFloor(
                             this.pos.x + this.width,
-                            this.pos.y + this.height
+                            this.pos.y + this.height,
+                            this.isHunter
                         )
                 ) {
                     this.pos.y -= this.velocity;
@@ -87,9 +98,18 @@ class Player {
                 this.pos.x -= this.velocity;
                 this.orientation = 2;
                 if (
-                    this.isHunter ^ room.getTileFloor(this.pos.x, this.pos.y) ||
                     this.isHunter ^
-                        room.getTileFloor(this.pos.x, this.pos.y + this.height)
+                        room.getTileFloor(
+                            this.pos.x,
+                            this.pos.y,
+                            this.isHunter
+                        ) ||
+                    this.isHunter ^
+                        room.getTileFloor(
+                            this.pos.x,
+                            this.pos.y + this.height,
+                            this.isHunter
+                        )
                 ) {
                     this.pos.x += this.velocity;
                     let leftdist = this.pos.x % tileSize;
@@ -103,12 +123,14 @@ class Player {
                     this.isHunter ^
                         room.getTileFloor(
                             this.pos.x + this.width,
-                            this.pos.y
+                            this.pos.y,
+                            this.isHunter
                         ) ||
                     this.isHunter ^
                         room.getTileFloor(
                             this.pos.x + this.width,
-                            this.pos.y + this.height
+                            this.pos.y + this.height,
+                            this.isHunter
                         )
                 ) {
                     this.pos.x -= this.velocity;

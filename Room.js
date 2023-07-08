@@ -9,6 +9,7 @@ class Room {
         this.bridges = room.bridges;
         this.lever = room.switch;
         this.escape = room.escape;
+        this.barriers = room.barriers;
 
         this.map[this.escape[1]][this.escape[0]] = true;
     }
@@ -63,7 +64,7 @@ class Room {
         }
     }
 
-    getTileFloor(x, y) {
+    getTileFloor(x, y, isHunter) {
         if (
             x < 0 ||
             y < 0 ||
@@ -75,6 +76,13 @@ class Room {
 
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
+        let val = false;
+        for (let i = 0; i < this.barriers.length; i++) {
+            if (tileX == this.barriers[i][0] && tileY == this.barriers[i][1]) {
+                return !isHunter;
+            }
+        }
+
         return this.map[tileY][tileX];
     }
 
