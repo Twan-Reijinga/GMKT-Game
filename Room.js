@@ -7,7 +7,10 @@ class Room {
         this.levers = room.levers;
     }
 
-    interact(x, y) {}
+    interact(x, y) {
+        let tileX = math.floor(x / this.tileSize);
+        let tileY = math.floor(y / this.tileSize);
+    }
 
     getTileFloor(x, y) {
         if (

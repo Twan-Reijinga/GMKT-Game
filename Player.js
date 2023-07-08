@@ -112,7 +112,7 @@ class Player {
     }
 
     interact(otherPLayerPos) {
-        room.interact(x, y);
+        room.interact(this.pos.x, this.pos.y);
     }
 
     setHealth(health) {
