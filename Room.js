@@ -4,28 +4,22 @@ class Room {
         this.tileSize = tileSize;
         this.tiles = tiles;
 
-        this.levers = room.levers;
+        this.bridges = room.bridges;
     }
 
-    interact(x, y) {
+    interact(x, y, isHunter) {
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
         for (x = -1; x < 2; x++) {
             for (y = -1; y < 2; y++) {
-                for (let i = 0; i < this.levers.length; i++) {
-                    console.log(
-                        [this.levers[i][0], this.levers[i][1]],
-                        [tileX + x, tileY + y],
-                        [x, y]
-                    );
+                for (let i = 0; i < this.bridges.length; i++) {
                     if (
-                        this.levers[i][0] == tileX + x &&
-                        this.levers[i][1] == tileY + y &&
+                        this.bridges[i][0] == tileX + x &&
+                        this.bridges[i][1] == tileY + y &&
                         (x != 0 || y != 0)
                     ) {
                         console.log("ye");
-                        this.map[tileY + y][tileX + x] =
-                            !this.map[tileY + y][tileX + x];
+                        this.map[tileY + y][tileX + x] = isHunter;
                     }
                 }
             }
@@ -39,12 +33,21 @@ class Room {
             x >= this.map.length * this.tileSize ||
             y >= this.map.length * this.tileSize //checkt of x of y buiten de map komt (al die andere onhandigheid is nu onnodig)
         ) {
-            return false;
+            return -1;
         }
 
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
         return this.map[tileY][tileX];
+    }
+
+    isBridge(x, y) {
+        for (let i = 0; i < this.bridges.length; i++) {
+            if (this.bridges[i][0] == x && this.bridges[i][1] == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     getRequiredTile(x, y, map) {
@@ -68,7 +71,7 @@ class Room {
         } else {
             val = 4;
         }
-        val = val + 5 * (map[y][x] == 1);
+        val = val + 5 * (map[y][x] == 1) + 10 * this.isBridge(x, y);
         return val;
     }
 

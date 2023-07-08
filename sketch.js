@@ -7,17 +7,30 @@ function setup() {
     keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
-        tileMap.get(0, 0, 8, 8),
+        //dark <-> light = +- 5 | bridge <-> floor = +- 10
+        tileMap.get(0, 0, 8, 8), // dark textures
         tileMap.get(0, 8, 8, 8),
         tileMap.get(8, 0, 8, 8),
         tileMap.get(16, 0, 8, 8),
         tileMap.get(8, 8, 8, 8),
-        tileMap.get(0 + 24, 0, 8, 8),
+
+        tileMap.get(0 + 24, 0, 8, 8), // light textures
         tileMap.get(0 + 24, 8, 8, 8),
         tileMap.get(8 + 24, 0, 8, 8),
         tileMap.get(16 + 24, 0, 8, 8),
         tileMap.get(8 + 24, 8, 8, 8),
-        tileMap.get(8 + 24, 8, 8, 8),
+
+        tileMap.get(0, 0 + 16, 8, 8), // dark bridge textures
+        tileMap.get(0, 8 + 16, 8, 8),
+        tileMap.get(8, 0 + 16, 8, 8),
+        tileMap.get(16, 0 + 16, 8, 8),
+        tileMap.get(8, 8 + 16, 8, 8),
+
+        tileMap.get(0 + 24, 0 + 16, 8, 8), // light bridge textures
+        tileMap.get(0 + 24, 8 + 16, 8, 8),
+        tileMap.get(8 + 24, 0 + 16, 8, 8),
+        tileMap.get(16 + 24, 0 + 16, 8, 8),
+        tileMap.get(8 + 24, 8 + 16, 8, 8),
     ];
     createCanvas(1000, 1000);
     background(51);

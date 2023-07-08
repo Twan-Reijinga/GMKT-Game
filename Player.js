@@ -130,13 +130,13 @@ class Player {
 
         if (this.isHunter && distance <= this.captureDistance) {
             console.log("captured!");
-            this.reverseRolls(this, otherPlayer);
+            this.reverseRoles(this, otherPlayer);
         } else {
-            room.interact(this.pos.x, this.pos.y);
+            room.interact(this.pos.x, this.pos.y, this.isHunter);
         }
     }
 
-    reverseRolls(hunter, runner) {
+    reverseRoles(hunter, runner) {
         let hunterPos = hunter.pos;
         let runnerPos = runner.pos;
         hunter.pos = runnerPos;
