@@ -3,14 +3,15 @@ let player1;
 let player2;
 
 function preload() {
-    playerSprite = loadImage("textures/player.png");
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
+    map2 = loadImage("map2.png");
 }
 
 function setup() {
+    mapFromImg(map2, 21);
     keyPressFlags = [false, false];
     tileSize = 50;
     tiles = [
@@ -130,15 +131,43 @@ function player2Input() {
     keyPressFlags[1] = keyIsDown(82);
 }
 
-function arrayFromMap(img, size) {
-    arr = [];
+function mapFromImg(img, size) {
+    let floor0 = ["818181", "FF0000", "000000", "444444"];
+    let bridges = ["000000", "FFFFFF"];
+    let button = "FF0000";
+    let rStart = "444444";
+    let hStart = "888888";
+    map = [];
+    bridgeArr = [];
+    buttonFin = [];
+    startpositions = [[], []];
     for (let y = 0; y < size; y++) {
-        v = [];
+        maprow = [];
         for (let x = 0; x < size; x++) {
-            v.push(+(red(img.get(x, y)) != 0));
+            //get Layer
+            col = img.get(x, y);
+            col.pop();
+            console.log(col);
+            hexarr = hex(col, 6);
+
+            hexcol =
+                hexarr[0].slice(-2) + hexarr[1].slice(-2) + hexarr[2].slice(-2);
+
+            console.log(hexcol);
+            if (floor0.includes(hexcol)) {
+                maprow.push(0);
+            } else maprow.push(1);
+
+            if (bridges.includes(hexcol)) {
+                bridgeArr.push([x, y]);
+            } else if (hexcol == button) {
+                buttonFin = [x, y, false, 0];
+            } else if ((hexcol = rStart)) {
+                startpositions[0] = [x, y];
+            }
         }
-        str = "[" + v.join(",") + "],\n";
-        arr.push(str);
+        str = "[ " + maprow.join(",") + " ],\n";
+        map.push(str);
     }
-    console.log("[" + arr.join("") + "]");
+    console.log("[" + map.join("") + "]");
 }
