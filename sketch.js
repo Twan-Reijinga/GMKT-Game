@@ -7,7 +7,6 @@ function preload() {
     player2Sprite = loadImage("textures/player2.png");
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
-    map2 = loadImage("map2.png");
 }
 
 function setup() {
@@ -53,13 +52,13 @@ function setup() {
     ];
     createCanvas(1050, 1050);
     background(51);
-    setuplevel(roomTemplates.level2);
+    setuplevel(roomTemplates.level3);
 }
 
 function setuplevel(level) {
     room = new Room(level, tileSize, [tiles, levers]);
-    let runnerStart = level.startpositions[0];
-    let hunterStart = level.startpositions[1];
+    let runnerStart = level.startPositions[0];
+    let hunterStart = level.startPositions[1];
     player1 = new Player(
         player1Sprite,
         runnerStart[0] * tileSize,
@@ -139,7 +138,7 @@ function mapFromImg(img, size) {
     let hStart = "999999";
     map = [];
     bridgeArr = [];
-    startpositions = [[], []];
+    startPositions = [[], []];
     mapExit = "";
     buttonFin = "";
     for (let y = 0; y < size; y++) {
@@ -163,9 +162,9 @@ function mapFromImg(img, size) {
             } else if (hexcol == button) {
                 buttonFin = "[" + x + ", " + y + ", false, 0],";
             } else if (hexcol == rStart) {
-                startpositions[0] = "[" + x + ", " + y + "],";
+                startPositions[0] = "[" + x + ", " + y + "],";
             } else if (hexcol == hStart) {
-                startpositions[1] = "[" + x + ", " + y + "],";
+                startPositions[1] = "[" + x + ", " + y + "],";
             }
         }
         tmpstr = "[ " + maprow.join(",") + " ],\n";
@@ -175,6 +174,6 @@ function mapFromImg(img, size) {
     bridgesStr = "bridges: [" + bridgeArr.join("") + "],\n";
     exitStr = "escape: " + mapExit;
     buttonStr = "switch: " + buttonFin;
-    startStr = "startPositions: [" + startpositions.join("") + "]";
+    startStr = "startPositions: [" + startPositions.join("") + "]";
     console.log(mapStr + bridgesStr + exitStr + buttonStr + startStr);
 }

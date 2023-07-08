@@ -24,7 +24,6 @@ class Room {
                         this.bridges[i][1] == tileY + y &&
                         (x != 0 || y != 0)
                     ) {
-                        console.log("ye");
                         this.map[tileY + y][tileX + x] = isHunter;
                         return;
                     }
