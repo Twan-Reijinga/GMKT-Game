@@ -53,5 +53,7 @@ roomTemplates = {
             [4, 15],
             [15, 2],
         ], //switch at (11, 5) will change the block at (12, 5)
+        escape: [0, 7],
+        switch: [19, 0, 1],
     },
 };
