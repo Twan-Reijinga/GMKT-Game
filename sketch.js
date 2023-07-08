@@ -1,5 +1,11 @@
+let room;
+let player1;
+let player2;
+
 function preload() {
     playerSprite = loadImage("textures/player.png");
+    player1Sprite = loadImage("textures/player1.png");
+    player2Sprite = loadImage("textures/player2.png");
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
 }
@@ -45,12 +51,31 @@ function setup() {
         leverMap.get(8 + 16, 8, 8, 8),
         leverMap.get(8 + 16, 0, 8, 8),
     ];
-
     createCanvas(1000, 1000);
     background(51);
-    room = new Room(roomTemplates.level2, tileSize, [tiles, levers]);
-    player1 = new Player(playerSprite, 0, 0, 30, 30, true);
-    player2 = new Player(playerSprite, 50, 50, 30, 30, false);
+    setuplevel(roomTemplates.level2);
+}
+
+function setuplevel(level) {
+    room = new Room(level, tileSize, [tiles, levers]);
+    let runnerStart = level.startpositions[0];
+    let hunterStart = level.startpositions[1];
+    player1 = new Player(
+        player1Sprite,
+        runnerStart[0] * tileSize,
+        runnerStart[1] * tileSize,
+        30,
+        30,
+        false
+    );
+    player2 = new Player(
+        player2Sprite,
+        hunterStart[0] * tileSize,
+        hunterStart[1] * tileSize,
+        30,
+        30,
+        true
+    );
 }
 
 function draw() {
