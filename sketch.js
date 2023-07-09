@@ -47,18 +47,16 @@ function preload() {
 
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
+    arrowMap = loadImage("textures/arrow.png");
 
     menuBackground = loadImage("textures/background.png");
     keybinds = loadImage("textures/keybindings.png");
     logo = loadImage("textures/logo.png");
 
     m5x7 = loadFont("font/m5x7.ttf");
-
-    map = loadImage("mapImgs/map3.png");
 }
 
 function setup() {
-    mapFromImg(map, 21);
     levels = Object.entries(roomTemplates);
     currentLevel = levels[0][1];
     textFont(m5x7);
@@ -120,9 +118,17 @@ function setup() {
         leverMap.get(8 + 16, 0, 8, 8),
     ];
 
+    arrows = [
+        arrowMap.get(0, 0, 8, 8),
+        arrowMap.get(0, 8, 8, 8),
+        arrowMap.get(8, 8, 8, 8),
+        arrowMap.get(8, 0, 8, 8),
+    ];
+
     mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
         tiles,
         levers,
+        arrows,
     ]);
 
     createCanvas(canvasSize[0], canvasSize[1]);
@@ -146,7 +152,7 @@ function setuplevel(gameLevel) {
     player1 = undefined;
     player2 = undefined;
 
-    room = new Room(level, tileSize, [tiles, levers]);
+    room = new Room(level, tileSize, [tiles, levers, arrows]);
 
     mapOffset = calculateMapOffset(room.map.length, tileSize);
     let runnerStart = level.startPositions[0];
@@ -223,6 +229,7 @@ function getMapSelectInputs() {
         mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
             tiles,
             levers,
+            arrows,
         ]);
     }
     keyPressFlags[0] = keyIsDown(37) || keyIsDown(65);
@@ -235,6 +242,7 @@ function getMapSelectInputs() {
         mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
             tiles,
             levers,
+            arrows,
         ]);
     }
     keyPressFlags[1] = keyIsDown(39) || keyIsDown(68);
@@ -243,7 +251,7 @@ function getMapSelectInputs() {
         setuplevel(levels[levelSelectIndex][1]);
         state = states.RUNNING;
     }
-    keyPressFlags[2] = keyIsDown(13);
+    keyPressFlags[2] = keyIsDown(13) || keyIsDown(16);
 }
 
 function drawMapSelect() {
@@ -331,7 +339,7 @@ function getMenuInputs() {
     } else if (keyIsDown(72)) {
         state = states.TUTORIAL;
     }
-    keyPressFlags[2] = keyIsDown(13);
+    keyPressFlags[2] = keyIsDown(13) || keyIsDown(16);
 }
 
 function drawWinScreen() {

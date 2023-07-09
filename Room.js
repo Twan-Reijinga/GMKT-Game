@@ -4,6 +4,7 @@ class Room {
 
         this.tiles = tileMaps[0];
         this.leverTex = tileMaps[1];
+        // this.arrow = tileMaps[2];
 
         this.map = room.map;
         this.bridges = room.bridges;
