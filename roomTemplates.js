@@ -44,7 +44,7 @@ roomTemplates = {
         switch: [19, 1, false, 0],
         startPositions: [
             [1, 7],
-            [0, 7],
+            [8, 8],
         ],
         barriers: [
             [17, 0],
