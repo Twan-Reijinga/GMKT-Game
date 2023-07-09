@@ -190,8 +190,6 @@ function draw() {
 
             player2.draw(mapOffset);
             player2Input();
-
-            drawGameHud();
             break;
         }
         case states.FINISHED: {

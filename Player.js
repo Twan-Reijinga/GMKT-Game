@@ -10,6 +10,8 @@ class Player {
         this.maxHealth = 100;
         this.captureDistance = tileSize * 1.5;
         this.isHunter = isHunter;
+        this.isSwapping = false;
+        this.swapRotationCenter;
 
         this.cooldownlength = 60;
         this.cooldown = 0;
@@ -39,6 +41,38 @@ class Player {
             this.drawCaptureRadius(offset);
         } else {
             room.detectWin(this);
+        }
+        if (this.isSwapping) {
+            // translate(mapOffset.x - width / 2, mapOffset.y - height / 2);
+            let centerPos = this.getCenterPos();
+            noFill();
+            stroke(255, 0, 0);
+            strokeWeight(this.width);
+            circle(
+                this.swapRotationCenter.x + mapOffset.x,
+                this.swapRotationCenter.y + mapOffset.y,
+                dist(
+                    centerPos.x,
+                    centerPos.y,
+                    this.swapRotationCenter.x,
+                    this.swapRotationCenter.y
+                ) * 2
+            );
+            this.isSwapping = false;
+            // let radius = dist(
+            //     centerPos.x,
+            //     centerPos.y,
+            //     this.swapRotationCenter.x,
+            //     this.swapRotationCenter.y
+            // );
+            // let angle = 0;
+            // let x = sin(angle) * radius + this.swapRotationCenter.x;
+            // let y = cos(angle) * radius + this.swapRotationCenter.y;
+            // console.log(
+            //     dist(x, y, this.swapRotationCenter.x, this.swapRotationCenter.y)
+            // );
+            // translate(-mapOffset.x, -mapOffset.y);
+            // this.isSwapping = false;
         }
     }
 
@@ -177,14 +211,26 @@ class Player {
         let soundPlayed = Math.floor(Math.random() * swapSounds.length);
         swapSounds[soundPlayed].play();
         swapSounds[soundPlayed].setVolume(0.125);
-        let hunterPos = hunter.pos;
-        let runnerPos = runner.pos;
+
+        let hunterPos = hunter.getCenterPos();
+        let runnerPos = runner.getCenterPos();
+        hunter.swapRotationCenter = createVector(
+            hunterPos.x + (runnerPos.x - hunterPos.x) / 2,
+            hunterPos.y + (runnerPos.y - hunterPos.y) / 2
+        );
+        runner.swapRotationCenter = hunter.swapRotationCenter;
+        hunter.swapTargetPos = runner.pos;
+        runner.swapTargetPos = hunter.pos;
+        hunterPos = hunter.pos;
+        runnerPos = runner.pos;
         hunter.pos = runnerPos;
         runner.pos = hunterPos;
 
         runner.cooldown = runner.cooldownlength;
         hunter.isHunter = false;
         runner.isHunter = true;
+        hunter.isSwapping = false;
+        runner.isSwapping = false;
     }
 
     setHealth(health) {
