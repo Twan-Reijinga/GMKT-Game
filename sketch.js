@@ -194,6 +194,7 @@ function draw() {
             player2.draw(mapOffset);
             player2Input();
             drawGameHud();
+            drawRoles(player2.isHunter);
             break;
         }
         case states.FINISHED: {
@@ -399,6 +400,31 @@ function drawGameHud() {
             pos.y + 100,
             60,
             60
+        );
+    }
+}
+
+function drawRoles(isLeftHunter) {
+    mapSize = room.map.length * tileSize;
+    if (isLeftHunter) {
+        fill(188, 25, 19);
+        textWithShadow("HUNTER", mapOffset.x / 2, height - 50, 5);
+        fill(0, 36, 255);
+        textWithShadow(
+            "RUNNER",
+            (mapOffset.x * 3) / 2 + mapSize,
+            height - 50,
+            5
+        );
+    } else {
+        fill(0, 36, 255);
+        textWithShadow("RUNNER", mapOffset.x / 2, height - 50, 5);
+        fill(188, 25, 19);
+        textWithShadow(
+            "HUNTER",
+            (mapOffset.x * 3) / 2 + mapSize,
+            height - 50,
+            5
         );
     }
 }

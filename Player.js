@@ -18,6 +18,11 @@ class Player {
     }
 
     draw(offset) {
+        if (this.isHunter) {
+            this.drawCaptureRadius(offset);
+        } else {
+            room.detectWin(this);
+        }
         if (this.cooldown > 0) this.cooldown -= 1;
         else this.cooldown = 0;
 
@@ -37,11 +42,7 @@ class Player {
         rotate(-(PI / 180) * rotations[this.orientation]);
         let pos = this.getCenterPos();
         translate(-Xtranslate, -Ytranslate);
-        if (this.isHunter) {
-            this.drawCaptureRadius(offset);
-        } else {
-            room.detectWin(this);
-        }
+
         if (this.isSwapping) {
             // translate(mapOffset.x - width / 2, mapOffset.y - height / 2);
             let centerPos = this.getCenterPos();
