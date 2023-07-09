@@ -18,6 +18,20 @@ const states = {
 var state = states.MENU;
 
 function preload() {
+    doorSounds = [
+        loadSound("audio/door1.wav"),
+        loadSound("audio/door2.wav"),
+        loadSound("audio/door3.wav"),
+    ];
+
+    swapSounds = [
+        loadSound("audio/swap1.wav"),
+        loadSound("audio/swap2.wav"),
+        loadSound("audio/swap3.wav"),
+    ];
+
+    exitAudio = loadSound("audio/exit.wav");
+
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
 

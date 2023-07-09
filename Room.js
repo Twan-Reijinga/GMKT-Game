@@ -40,6 +40,8 @@ class Room {
                     this.lever[1] == tileY &&
                     !isHunter
                 ) {
+                    exitAudio.play(0, 2);
+                    exitAudio.setVolume(0.125);
                     this.lever[2] = true;
                     this.map[this.escape[1]][this.escape[0]] = false;
                 }
@@ -53,14 +55,20 @@ class Room {
                     (player.getCenterPos().x - arr[i][0]) ** 2 +
                         (player.getCenterPos().y - arr[i][1]) ** 2
                 );
-                console.log(dist);
+                // console.log(dist);
                 if (dist < smallest) {
                     smallest = dist;
                     index = i;
                 }
             }
-            console.log(index);
-            this.map[arr[index][1]][arr[index][0]] = isHunter;
+            // console.log(index);
+            if (this.map[arr[index][1]][arr[index][0]] != isHunter) {
+                doorSounds[
+                    Math.floor(Math.random() * doorSounds.length)
+                ].play();
+
+                this.map[arr[index][1]][arr[index][0]] = isHunter;
+            }
         }
     }
 

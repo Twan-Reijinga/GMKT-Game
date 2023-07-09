@@ -174,6 +174,7 @@ class Player {
     }
 
     reverseRoles(hunter, runner) {
+        swapSounds[Math.floor(Math.random() * swapSounds.length)].play();
         let hunterPos = hunter.pos;
         let runnerPos = runner.pos;
         hunter.pos = runnerPos;
