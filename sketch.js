@@ -34,6 +34,7 @@ function preload() {
 
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
+    abilitySprite = loadImage("textures/ability.png");
 
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
@@ -167,6 +168,8 @@ function draw() {
 
             player2.draw(mapOffset);
             player2Input();
+
+            drawGameHud();
             break;
         }
         case states.FINISHED: {
@@ -280,6 +283,21 @@ function getWinScreenInputs() {
         state = states.RUNNING;
     } else if (keyIsDown(77)) {
         state = states.MENU;
+    }
+}
+
+function drawGameHud() {
+    if (player1.isHunter) {
+        mapSize = room.map.length * tileSize;
+        pos = createVector(
+            width - (width - (mapOffset.x + mapSize)) / 2,
+            height - 200
+        );
+        image(abilitySprite, pos.x - 150, pos.y - 150, 300, 300);
+        image(keybinds.get(32, 0, 32, 16), pos.x, pos.y, 200, 100);
+    } else {
+        pos = createVector(mapOffset.x / 2 - 150, height - 350);
+        image(abilitySprite, pos.x, pos.y, 300, 300);
     }
 }
 
