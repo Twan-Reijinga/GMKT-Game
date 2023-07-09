@@ -548,6 +548,7 @@ function drawTutorial() {
         5
     );
     image(tiles[4 + 20], width / 2, 250 + 30 + 75 * 3, 50, 50);
+    image(arrows[0], width / 2, 250 + 30 + 75 * 3, 50, 50);
 
     textWithShadow(
         "Barrier tiles: these Block anyone trying to pass.",
