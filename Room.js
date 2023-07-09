@@ -157,6 +157,11 @@ class Room {
         return val;
     }
 
+    deactivateSwitch() {
+        this.lever[2] = false;
+        this.map[this.escape[1]][this.escape[0]] = true;
+    }
+
     draw(offset) {
         noSmooth();
         for (let y = 0; y < this.map.length; y++) {

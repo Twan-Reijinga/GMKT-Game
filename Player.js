@@ -231,6 +231,7 @@ class Player {
         runner.isHunter = true;
         hunter.isSwapping = false;
         runner.isSwapping = false;
+        room.deactivateSwitch();
     }
 
     setHealth(health) {
