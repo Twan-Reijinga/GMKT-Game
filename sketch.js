@@ -229,7 +229,7 @@ function getMapSelectInputs() {
     }
     keyPressFlags[1] = keyIsDown(39) || keyIsDown(68);
 
-    if (keyIsDown(13) && !keyPressFlags[2]) {
+    if ((keyIsDown(13) || keyIsDown(16)) && !keyPressFlags[2]) {
         setuplevel(levels[levelSelectIndex][1]);
         state = states.RUNNING;
     }
@@ -316,7 +316,7 @@ function drawMenu() {
 }
 
 function getMenuInputs() {
-    if (keyIsDown(13) && !keyPressFlags[2]) {
+    if ((keyIsDown(13) || keyIsDown(16)) && !keyPressFlags[2]) {
         state = states.MAPSELECT;
     } else if (keyIsDown(72)) {
         state = states.TUTORIAL;
