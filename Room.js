@@ -20,6 +20,7 @@ class Room {
         let isHunter = player.isHunter;
 
         let arr = [];
+
         let tileX = Math.floor(x / this.tileSize);
         let tileY = Math.floor(y / this.tileSize);
         for (x = -1; x < 2; x++) {
@@ -30,9 +31,7 @@ class Room {
                         this.bridges[i][1] == tileY + y &&
                         (x != 0 || y != 0)
                     ) {
-                        arr.push([tileX + x, tileY + y]);
-                        // this.map[tileY + y][tileX + x] = isHunter;
-                        // return;
+                        arr.push(createVector(tileX + x, tileY + y));
                     }
                 }
                 if (
@@ -53,27 +52,35 @@ class Room {
                 }
             }
         }
-        if (arr.length != 0) {
+
+        if (arr.length > 0) {
             let smallest = Infinity;
-            let index = -1;
+            let index = 0;
+            let pPos = player.getCenterPos();
+            console.log(arr);
+            console.log(pPos);
             for (let i = 0; i < arr.length; i++) {
-                let dist = sqrt(
-                    (player.getCenterPos().x - arr[i][0]) ** 2 +
-                        (player.getCenterPos().y - arr[i][1]) ** 2
+                let bridgepos = createVector(
+                    arr[i].x * 50 + 25,
+                    arr[i].y * 50 + 25
                 );
-                // console.log(dist);
+                console.log(arr[i].x);
+                let dist = sqrt(
+                    (pPos.x - bridgepos.x) ** 2 + (pPos.y - bridgepos.y) ** 2
+                );
+
                 if (dist < smallest) {
                     smallest = dist;
                     index = i;
                 }
             }
             // console.log(index);
-            if (this.map[arr[index][1]][arr[index][0]] != isHunter) {
+            if (this.map[arr[index].y][arr[index].x] != isHunter) {
                 let doorsound = Math.floor(Math.random() * doorSounds.length);
                 doorSounds[doorsound].play();
                 doorSounds[doorsound].setVolume(0.125);
 
-                this.map[arr[index][1]][arr[index][0]] = isHunter;
+                this.map[arr[index].y][arr[index].x] = isHunter;
             }
         }
     }
