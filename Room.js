@@ -41,7 +41,7 @@ class Room {
                     !isHunter
                 ) {
                     exitAudio.play(0, 2);
-                    exitAudio.setVolume(0.125);
+                    exitAudio.setVolume(0.01);
                     this.lever[2] = true;
                     this.map[this.escape[1]][this.escape[0]] = false;
                 }
@@ -63,9 +63,9 @@ class Room {
             }
             // console.log(index);
             if (this.map[arr[index][1]][arr[index][0]] != isHunter) {
-                doorSounds[
-                    Math.floor(Math.random() * doorSounds.length)
-                ].play();
+                let doorsound = Math.floor(Math.random() * doorSounds.length);
+                doorSounds[doorsound].play();
+                doorSounds[doorsound].setVolume(0.125);
 
                 this.map[arr[index][1]][arr[index][0]] = isHunter;
             }

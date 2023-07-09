@@ -293,17 +293,17 @@ function drawGameHud() {
             width - (width - (mapOffset.x + mapSize)) / 2,
             height - 200
         );
-        image(abilitySprite, pos.x - 150, pos.y - 150, 300, 300);
-        image(keybinds.get(32, 0, 32, 16), pos.x, pos.y, 160, 80);
+        image(abilitySprite, pos.x - 100, pos.y - 100, 200, 200);
+        image(keybinds.get(32, 0, 32, 16), pos.x, pos.y, 120, 60);
     } else {
-        pos = createVector(mapOffset.x / 2 - 150, height - 350);
-        image(abilitySprite, pos.x, pos.y, 300, 300);
+        pos = createVector(mapOffset.x / 2 - 100, height - 300);
+        image(abilitySprite, pos.x, pos.y, 200, 200);
         image(
             keybinds.get(32, 32, 16, 16),
-            pos.x + 150 + 40,
-            pos.y + 150,
-            80,
-            80
+            pos.x + 100 + 30,
+            pos.y + 100,
+            60,
+            60
         );
     }
 }
