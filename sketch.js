@@ -51,9 +51,11 @@ function preload() {
     logo = loadImage("textures/logo.png");
 
     m5x7 = loadFont("font/m5x7.ttf");
+    map2 = loadImage("mapImgs/map2.png");
 }
 
 function setup() {
+    mapFromImg(map2, 21);
     levels = Object.entries(roomTemplates);
     currentLevel = levels[0][1];
     textFont(m5x7);
@@ -533,14 +535,16 @@ function getTutorialInputs() {
 }
 
 function mapFromImg(img, size) {
-    let floor0 = ["818181", "FF0000", "000000", "444444"];
+    let floor0 = ["818181", "00FF00", "000000", "444444"];
     let bridges = ["000000", "FFFFFF"];
     let exit = "0000FF";
-    let button = "FF0000";
+    let button = "00FF00";
+    let barrier = "FF0000";
     let rStart = "444444";
     let hStart = "999999";
     map = [];
     bridgeArr = [];
+    barrierArr = [];
     startPositions = [[], []];
     mapExit = "";
     buttonFin = "";
@@ -560,6 +564,8 @@ function mapFromImg(img, size) {
 
             if (bridges.includes(hexcol)) {
                 bridgeArr.push("[" + x + ", " + y + "],");
+            } else if (hexcol == barrier) {
+                barrierArr.push("[" + x + ", " + y + "],");
             } else if (hexcol == exit) {
                 mapExit = "[" + x + ", " + y + "],";
             } else if (hexcol == button) {
@@ -577,6 +583,9 @@ function mapFromImg(img, size) {
     bridgesStr = "bridges: [" + bridgeArr.join("") + "],\n";
     exitStr = "escape: " + mapExit;
     buttonStr = "switch: " + buttonFin;
-    startStr = "startPositions: [" + startPositions.join("") + "]";
-    console.log(mapStr + bridgesStr + exitStr + buttonStr + startStr);
+    startStr = "startPositions: [" + startPositions.join("") + "],";
+    barrierStr = "barriers: [" + barrierArr.join("") + "],";
+    console.log(
+        mapStr + bridgesStr + exitStr + buttonStr + startStr + barrierStr
+    );
 }

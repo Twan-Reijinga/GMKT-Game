@@ -40,8 +40,11 @@ class Room {
                     this.lever[1] == tileY &&
                     !isHunter
                 ) {
-                    exitAudio.play(0, 2);
-                    exitAudio.setVolume(0.01);
+                    let doorsound = Math.floor(
+                        Math.random() * doorSounds.length
+                    );
+                    doorSounds[doorsound].play();
+                    doorSounds[doorsound].setVolume(0.125);
                     this.lever[2] = true;
                     this.map[this.escape[1]][this.escape[0]] = false;
                 }
