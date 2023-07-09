@@ -51,11 +51,9 @@ function preload() {
     logo = loadImage("textures/logo.png");
 
     m5x7 = loadFont("font/m5x7.ttf");
-    map2 = loadImage("mapImgs/map2.png");
 }
 
 function setup() {
-    mapFromImg(map2, 21);
     levels = Object.entries(roomTemplates);
     currentLevel = levels[0][1];
     textFont(m5x7);
