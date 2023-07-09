@@ -12,6 +12,7 @@ const states = {
     MENU: 0,
     RUNNING: 1,
     FINISHED: 2,
+    TUTORIAL: 3,
 };
 
 var state = states.MENU;
@@ -22,9 +23,11 @@ function preload() {
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
     menuBackground = loadImage("textures/background.png");
+    m5x7 = loadFont("font/m5x7.ttf");
 }
 
 function setup() {
+    textFont(m5x7);
     currentLevel = roomTemplates.level1;
     tileSize = 50;
 
@@ -130,10 +133,11 @@ function draw() {
     switch (state) {
         case states.MENU: {
             drawMenu();
+            getMenuInputs();
             break;
         }
         case states.RUNNING: {
-            background(51);
+            background(70);
             if (winner != null) {
                 state = states.FINISHED;
             }
@@ -151,38 +155,93 @@ function draw() {
             getWinScreenInputs();
             break;
         }
+        case states.TUTORIAL: {
+            getTutorialInputs();
+            break;
+        }
         default: {
             break;
         }
     }
 }
 
+function textWithShadow(val, x, y, shadowOffset, col = 255) {
+    fill(0);
+    text(val, x + shadowOffset, y + shadowOffset);
+    fill(col);
+    text(val, x, y);
+}
+
 function drawMenu() {
+    textSize(200);
+    textAlign(CENTER);
     image(menuBackground, 0, 0, width, height);
+    fill(0, 0, 0, 150);
+    rect(0, 0, width, height);
+    textWithShadow("MAZESWAP", width / 2, 200, 5);
+
+    textSize(75);
+    textWithShadow("Press ENTER to start game", width / 2, height / 2 - 100, 5);
+    textWithShadow("Press H for a tutorial", width / 2, height / 2 + 100, 5);
+}
+
+function getMenuInputs() {
+    if (keyIsDown(13)) {
+        setuplevel(currentLevel);
+        state = states.RUNNING;
+    } else if (keyIsDown(72)) {
+        state = states.TUTORIAL;
+    }
 }
 
 function drawWinScreen() {
-    background(51);
+    background(129);
     textAlign(CENTER);
-    textSize(45);
-    fill(255, 255, 255);
-    text("Press R to play again.", width / 2, height / 2);
-    text("Press M to go back to the menu.", width / 2, height / 2 + 200);
-    textSize(55);
+    textSize(75);
+
+    textWithShadow("Press R to play again.", width / 2, height / 2, 5);
+    textWithShadow(
+        "Press M to go back to the menu.",
+        width / 2,
+        height / 2 + 200,
+        5
+    );
+    textSize(125);
     if (winner == player1) {
         fill(0, 0, 255);
-        text("Player 1 wins the game!", width / 2, height / 2 - 200);
+        textWithShadow(
+            "Player 1 wins the game!",
+            width / 2,
+            height / 2 - 200,
+            5,
+            [0, 0, 255]
+        );
     } else if (winner == player2) {
         fill(255, 0, 0);
-        text("Player 2 wins the game!", width / 2, height / 2 - 200);
+        textWithShadow(
+            "Player 2 wins the game!",
+            width / 2,
+            height / 2 - 200,
+            5,
+            [255, 0, 0]
+        );
     } else {
-        text("How did I get here?", width / 2, height / 2 - 200);
+        textWithShadow(
+            "How did I get here?",
+            width / 2,
+            height / 2 - 200,
+            5,
+            [0, 255, 0]
+        );
     }
 }
+
 function getWinScreenInputs() {
     if (keyIsDown(82)) {
         setuplevel(currentLevel);
         state = states.RUNNING;
+    } else if (keyIsDown(77)) {
+        state = states.MENU;
     }
 }
 
@@ -227,6 +286,12 @@ function player2Input() {
         player2.interact(player1);
     }
     keyPressFlags[1] = keyIsDown(70);
+}
+
+function getTutorialInputs() {
+    if (keyIsDown(27)) {
+        state = states.MENU;
+    }
 }
 
 function mapFromImg(img, size) {
