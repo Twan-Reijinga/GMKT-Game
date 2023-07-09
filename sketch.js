@@ -26,6 +26,7 @@ function preload() {
 
     menuBackground = loadImage("textures/background.png");
     keybinds = loadImage("textures/keybindings.png");
+    logo = loadImage("textures/logo.png");
 
     m5x7 = loadFont("font/m5x7.ttf");
 }
@@ -178,12 +179,30 @@ function textWithShadow(val, x, y, shadowOffset, col = 255) {
 }
 
 function drawMenu() {
-    textSize(200);
+    noSmooth();
     textAlign(CENTER);
+
     image(menuBackground, 0, 0, width, height);
     fill(0, 0, 0, 150);
     rect(0, 0, width, height);
-    textWithShadow("MAZESWAP", width / 2, 200, 5);
+
+    mult = 3;
+    x = width / 2 - (logo.width / 2) * mult;
+    y = 150 - (logo.height / 2) * mult;
+
+    image(logo, x, y, logo.width * mult, logo.height * mult);
+
+    fill(0, 0, 0, 70);
+    rect(x, y, logo.width * mult, logo.height * mult);
+    textSize(30);
+    textWithShadow(
+        "Play in Fullscreen (F11) for best experience",
+        width / 2,
+        25,
+        5
+    );
+    textSize(50);
+    textWithShadow("A 2-player game for a single keyboard", width / 2, 300, 5);
 
     textSize(75);
     textWithShadow("Press ENTER to start game", width / 2, height / 2 - 100, 5);
