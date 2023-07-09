@@ -1,18 +1,25 @@
 let room;
+let mapPreviewDrawer;
+
 let player1;
 let player2;
 let winner = null;
+
 let mapOffset;
 let tileSize;
 let canvasSize;
 let mapSize;
+
 let currentLevel;
+let levelSelectIndex = 0;
+let levels;
 
 const states = {
     MENU: 0,
-    RUNNING: 1,
-    FINISHED: 2,
-    TUTORIAL: 3,
+    MAPSELECT: 1,
+    RUNNING: 2,
+    FINISHED: 3,
+    TUTORIAL: 4,
 };
 
 var state = states.MENU;
@@ -47,14 +54,15 @@ function preload() {
 }
 
 function setup() {
+    levels = Object.entries(roomTemplates);
+    currentLevel = levels[0][1];
     textFont(m5x7);
-    currentLevel = roomTemplates.level1;
     tileSize = 50;
 
     canvasSize = [1920, 1080];
     // mapOffset = createVector(0, 0);
 
-    keyPressFlags = [false, false];
+    keyPressFlags = [false, false, false];
 
     tiles = [
         //dark <-> light = +- 5 | bridge <-> floor = +- 10 | normal <-> barrier/win = +- 15
@@ -106,19 +114,26 @@ function setup() {
         leverMap.get(8 + 16, 8, 8, 8),
         leverMap.get(8 + 16, 0, 8, 8),
     ];
+
+    mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
+        tiles,
+        levers,
+    ]);
+
     createCanvas(canvasSize[0], canvasSize[1]);
     background(51);
     setuplevel(currentLevel);
 }
 
-function calculateMapOffset(size) {
-    totalsize = size * tileSize;
+function calculateMapOffset(size, tSize) {
+    totalsize = size * tSize;
     let Xoffset = (canvasSize[0] - totalsize) / 2;
     let Yoffset = (canvasSize[1] - totalsize) / 2;
     return createVector(Xoffset, Yoffset);
 }
 
 function setuplevel(gameLevel) {
+    currentLevel = gameLevel;
     level = JSON.parse(JSON.stringify(gameLevel));
 
     winner = undefined;
@@ -128,7 +143,7 @@ function setuplevel(gameLevel) {
 
     room = new Room(level, tileSize, [tiles, levers]);
 
-    mapOffset = calculateMapOffset(room.map.length);
+    mapOffset = calculateMapOffset(room.map.length, tileSize);
     let runnerStart = level.startPositions[0];
     let hunterStart = level.startPositions[1];
     player1 = new Player(
@@ -154,6 +169,11 @@ function draw() {
         case states.MENU: {
             drawMenu();
             getMenuInputs();
+            break;
+        }
+        case states.MAPSELECT: {
+            getMapSelectInputs();
+            drawMapSelect();
             break;
         }
         case states.RUNNING: {
@@ -186,6 +206,77 @@ function draw() {
             break;
         }
     }
+}
+
+function getMapSelectInputs() {
+    if ((keyIsDown(37) || keyIsDown(65)) && !keyPressFlags[0]) {
+        levelSelectIndex -= 1;
+        if (levelSelectIndex < 0) levelSelectIndex = levels.length - 1;
+        mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
+            tiles,
+            levers,
+        ]);
+    }
+    keyPressFlags[0] = keyIsDown(37) || keyIsDown(65);
+
+    if ((keyIsDown(39) || keyIsDown(68)) && !keyPressFlags[1]) {
+        levelSelectIndex += 1;
+        if (levelSelectIndex > levels.length - 1) {
+            levelSelectIndex = 0;
+        }
+        mapPreviewDrawer = new Room(levels[levelSelectIndex][1], 30, [
+            tiles,
+            levers,
+        ]);
+    }
+    keyPressFlags[1] = keyIsDown(39) || keyIsDown(68);
+
+    if (keyIsDown(13) && !keyPressFlags[2]) {
+        setuplevel(levels[levelSelectIndex][1]);
+        state = states.RUNNING;
+    }
+    keyPressFlags[2] = keyIsDown(13);
+}
+
+function drawMapSelect() {
+    background(70);
+    selectedLevelName = levels[levelSelectIndex][0];
+    selectedLevel = levels[levelSelectIndex][1];
+    offset = calculateMapOffset(selectedLevel.map.length, 30);
+    mapPreviewDrawer.draw(offset);
+
+    textAlign(CENTER, BOTTOM);
+    textWithShadow(selectedLevelName, width / 2, offset.y - 20, 5);
+    image(
+        keybinds.get(32, 16, 16, 16),
+        width - offset.x / 2,
+        height / 2,
+        120,
+        120
+    );
+    image(
+        keybinds.get(32, 48, 16, 16),
+        width - offset.x / 2,
+        height / 2 - 120,
+        120,
+        120
+    );
+
+    image(keybinds.get(0, 16, 16, 16), offset.x / 2, height / 2, 120, 120);
+    image(
+        keybinds.get(0, 48, 16, 16),
+        offset.x / 2,
+        height / 2 - 120,
+        120,
+        120
+    );
+    textAlign(CENTER);
+    textWithShadow(
+        "Press ENTER to confirm selection and enter level.",
+        width / 2,
+        height - (height - (height - offset.y)) / 2,
+        5
+    );
 }
 
 function textWithShadow(val, x, y, shadowOffset, col = 255) {
@@ -227,12 +318,12 @@ function drawMenu() {
 }
 
 function getMenuInputs() {
-    if (keyIsDown(13)) {
-        setuplevel(currentLevel);
-        state = states.RUNNING;
+    if (keyIsDown(13) && !keyPressFlags[2]) {
+        state = states.MAPSELECT;
     } else if (keyIsDown(72)) {
         state = states.TUTORIAL;
     }
+    keyPressFlags[2] = keyIsDown(13);
 }
 
 function drawWinScreen() {
@@ -322,13 +413,9 @@ function player1Input() {
     if (keyIsDown(RIGHT_ARROW)) {
         player1.move("right");
     }
-    if (
-        (keyIsDown(13) || keyIsDown(16)) &&
-        (keyIsDown(13) || keyIsDown(16)) != keyPressFlags[0]
-    ) {
+    if (keyIsDown(13) || keyIsDown(16)) {
         player1.interact(player2);
     }
-    keyPressFlags[0] = keyIsDown(13) || keyIsDown(16);
 }
 
 function player2Input() {
@@ -345,10 +432,9 @@ function player2Input() {
     if (keyIsDown(68)) {
         player2.move("right");
     }
-    if (keyIsDown(70) && keyIsDown(70) != keyPressFlags[1]) {
+    if (keyIsDown(70)) {
         player2.interact(player1);
     }
-    keyPressFlags[1] = keyIsDown(70);
 }
 
 function drawTutorial() {
