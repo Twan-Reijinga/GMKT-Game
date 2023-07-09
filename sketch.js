@@ -20,9 +20,13 @@ var state = states.MENU;
 function preload() {
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
+
     tileMap = loadImage("textures/tiles.png");
     leverMap = loadImage("textures/buttons.png");
+
     menuBackground = loadImage("textures/background.png");
+    keybinds = loadImage("textures/keybindings.png");
+
     m5x7 = loadFont("font/m5x7.ttf");
 }
 
@@ -156,6 +160,7 @@ function draw() {
             break;
         }
         case states.TUTORIAL: {
+            drawTutorial();
             getTutorialInputs();
             break;
         }
@@ -195,7 +200,7 @@ function getMenuInputs() {
 }
 
 function drawWinScreen() {
-    background(129);
+    background(70);
     textAlign(CENTER);
     textSize(75);
 
@@ -286,6 +291,95 @@ function player2Input() {
         player2.interact(player1);
     }
     keyPressFlags[1] = keyIsDown(70);
+}
+
+function drawTutorial() {
+    noSmooth();
+    textSize(75);
+    textAlign(CENTER);
+    image(menuBackground, 0, 0, width, height);
+    fill(0, 0, 0, 150);
+    rect(0, 0, width, height);
+
+    textWithShadow(
+        "MAZESWAP is a 2-player game played on a single keyboard",
+        width / 2,
+        50,
+        5
+    );
+    textWithShadow("Press ESC to go back to Menu", width / 2, height - 50, 5);
+
+    textSize(50);
+    textAlign(LEFT);
+    textWithShadow("The Roles:", 100, 200, 5);
+    textWithShadow("The Tiles:", width / 2, 200, 5);
+    textWithShadow("Controls:", 100, height / 2, 5);
+    textWithShadow("Player 1:", 100, height / 2 + 100, 5, [50, 50, 255]);
+    textWithShadow("Player 2:", 100, height / 2 + 225, 5, [255, 50, 50]);
+
+    image(keybinds, 250, height / 2 + 50, 250, 250);
+
+    textSize(30);
+
+    textAlign(LEFT, TOP);
+    textWithShadow(
+        "Runner: \nAs the Runner, your goal is to escape the maze by pressing the button \nand getting to the exit.\n\nHunter:\nAs the Hunter, your goal is to get close to the runner and swap roles\nwith them by using your Interact key (F or Enter), and become the runner.",
+        125,
+        250,
+        5
+    );
+
+    textSize(40);
+    textLeading(30);
+    textAlign(LEFT, CENTER);
+    textWithShadow(
+        "Ground tiles: The Ground tile is the default tile.\nIt can be walked on only by the Runner.",
+        width / 2 + 55,
+        250 + 20,
+        5
+    );
+    image(tiles[4], width / 2, 250, 50, 50);
+
+    textWithShadow(
+        "Top tiles: Top tiles are the same as ground tile,\nbut can only be walked on by the Hunter.",
+        width / 2 + 55,
+        250 + 20 + 75,
+        5
+    );
+    image(tiles[4 + 5], width / 2, 250 + 75, 50, 50);
+
+    textWithShadow(
+        "Bridge tiles: these allow both the Runner and the\nHunter to walk on, depending on their state, which\ncan be seen as a difference in brightness.",
+        width / 2 + 55,
+        250 + 15 + 20 + 75 * 2,
+        5
+    );
+    image(tiles[4 + 10], width / 2, 250 + 15 + 75 * 2, 50, 50);
+
+    textWithShadow(
+        "Exit tiles: Step on this tile as a Runner to win.",
+        width / 2 + 55,
+        250 + 50 + 75 * 3,
+        5
+    );
+    image(tiles[4 + 20], width / 2, 250 + 30 + 75 * 3, 50, 50);
+
+    textWithShadow(
+        "Barrier tiles: these Block anyone trying to pass.",
+        width / 2 + 55,
+        250 + 50 + 75 * 4,
+        5
+    );
+    image(tiles[4 + 25], width / 2, 250 + 30 + 75 * 4, 50, 50);
+
+    textWithShadow(
+        "Button: Press this as a Runner to unlock the Exit.",
+        width / 2 + 55,
+        250 + 50 + 75 * 5,
+        5
+    );
+    image(tiles[4], width / 2, 250 + 30 + 75 * 5, 50, 50);
+    image(levers[0], width / 2, 250 + 30 + 75 * 5, 50, 50);
 }
 
 function getTutorialInputs() {
