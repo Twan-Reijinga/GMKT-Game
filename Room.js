@@ -4,7 +4,7 @@ class Room {
 
         this.tiles = tileMaps[0];
         this.leverTex = tileMaps[1];
-        // this.arrow = tileMaps[2];
+        this.arrow = tileMaps[2];
 
         this.map = room.map;
         this.bridges = room.bridges;
@@ -182,6 +182,45 @@ class Room {
                     this.tileSize,
                     this.tileSize
                 );
+                if (
+                    this.escape[0] == x &&
+                    this.escape[1] == y &&
+                    this.lever[2] == true
+                ) {
+                    if (x == 0) {
+                        image(
+                            this.arrow[1],
+                            x * this.tileSize + offset.x,
+                            y * this.tileSize + offset.y,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    } else if (y == 0) {
+                        image(
+                            this.arrow[0],
+                            x * this.tileSize + offset.x,
+                            y * this.tileSize + offset.y,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    } else if (x == this.map.length - 1) {
+                        image(
+                            this.arrow[2],
+                            x * this.tileSize + offset.x,
+                            y * this.tileSize + offset.y,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    } else if (y == this.map.length - 1) {
+                        image(
+                            this.arrow[3],
+                            x * this.tileSize + offset.x,
+                            y * this.tileSize + offset.y,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    }
+                }
                 if (this.lever[0] == x && this.lever[1] == y) {
                     let imglever =
                         this.leverTex[this.lever[3] + 4 * this.lever[2]];
