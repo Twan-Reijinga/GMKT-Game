@@ -39,6 +39,8 @@ function preload() {
 
     exitAudio = loadSound("audio/exit.wav");
 
+    winSound = loadSound("audio/win.wav");
+
     player1Sprite = loadImage("textures/player1.png");
     player2Sprite = loadImage("textures/player2.png");
     abilitySprite = loadImage("textures/ability.png");
@@ -179,6 +181,9 @@ function draw() {
         case states.RUNNING: {
             background(70);
             if (winner != null) {
+                winSound.play();
+                winSound.setVolume(0.125);
+
                 state = states.FINISHED;
             }
 
@@ -188,6 +193,7 @@ function draw() {
 
             player2.draw(mapOffset);
             player2Input();
+            drawGameHud();
             break;
         }
         case states.FINISHED: {
