@@ -326,7 +326,7 @@ function drawMenu() {
         5
     );
     textSize(50);
-    textWithShadow("A 2-player game for a single keyboard", width / 2, 300, 5);
+    textWithShadow("A Couch Co-Op Game!", width / 2, 300, 5);
 
     textSize(75);
     textWithShadow("Press ENTER to start game", width / 2, height / 2 - 100, 5);
